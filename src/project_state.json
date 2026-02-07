@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a playful Valentine’s Day “question” micro-app with a short multi-screen flow, cute theme, a dodging NO button gag, and celebratory YES outcome effects.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Seamless cute heart pattern background in pink/red/soft-purple palette (valentine-pattern.dim_1600x900.png)\n- Soft gradient background with subtle bokeh/hearts in pink/red/soft-purple palette (valentine-gradient-bg.dim_1600x900.png)\n- Minimal rounded heart icon sticker style, soft purple/pink tones (heart-sticker-icon.dim_256x256.png)",
+  "existing_features": [
+    {
+      "id": "feature-implement-a-4-step-single-page-valentine-micro-app-flow-with-clearly-separated-screens-1-intro-screen-2-build-up-screen-3-big-question-screen-4-sweet-ending-screen-navigation-must-be-driven-by-button-clicks-and-not-require-any-backend-calls",
+      "title": "Implement a 4-step, single-page Valentine micro-app flow with clearly separated screens: (1) Intro screen, (2) Build-up screen, (3) Big Question screen, (4) Sweet Ending screen. Navigation must be driven by button clicks and not require any backend calls.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-intro-screen-with-the-exact-user-facing-text-in-english-and-a-single-primary-button-labeled-continue-text-must-read-hi-anya-ni-made-a-tiny-app-just-to-ask-you-something",
+      "title": "Create the Intro screen with the exact user-facing text (in English) and a single primary button labeled “Continue”. Text must read: “Hi Anya 💕\\nI made a tiny app just to ask you something…”",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-build-up-screen-with-the-exact-user-facing-text-in-english-and-a-single-primary-button-labeled-i-m-ready-text-must-read-this-is-a-very-serious-question-nplease-answer-honestly",
+      "title": "Create the Build-up screen with the exact user-facing text (in English) and a single primary button labeled “I’m ready”. Text must read: “This is a very serious question.\\nPlease answer honestly 😌”",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-big-question-screen-with-big-bold-centered-text-anya-will-you-be-my-valentine-under-it-render-two-buttons-yes-and-no-render-a-small-subtle-line-of-helper-text-under-the-buttons-just-kidding-but-i-really-hope-you-say-yes",
+      "title": "Create the Big Question screen with big, bold centered text: “Anya, will you be my Valentine? 💝”. Under it, render two buttons: “YES 💕” and “NO”. Render a small, subtle line of helper text under the buttons: “(Just kidding… but I really hope you say yes 🥺)”.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-dodging-no-button-interaction-on-the-big-question-screen-when-the-user-attempts-to-click-tap-the-no-button-including-pointer-hover-on-desktop-and-touch-pointer-down-on-mobile-the-no-button-must-evade-the-pointer-by-moving-slide-jump-to-a-new-position-within-a-bounded-area-on-the-screen-the-yes-button-must-remain-stationary-and-easy-to-click",
+      "title": "Implement the “dodging NO button” interaction on the Big Question screen: when the user attempts to click/tap the NO button (including pointer hover on desktop and touch/pointer down on mobile), the NO button must evade the pointer by moving (slide/jump) to a new position within a bounded area on the screen. The YES button must remain stationary and easy to click.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-show-playful-non-pressuring-feedback-messages-near-the-buttons-when-no-is-dodged-randomly-pick-from-the-provided-list-and-display-one-at-a-time-briefly-auto-fade-after-each-dodge-attempt-messages-english-exactly-hey-hey-hey-nice-try-that-button-is-shy-wrong-choice-detected-the-universe-says-no-to-no",
+      "title": "Show playful, non-pressuring feedback messages near the buttons when NO is dodged. Randomly pick from the provided list and display one at a time, briefly (auto-fade) after each dodge attempt. Messages (English, exactly): “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-the-user-clicks-yes-play-a-celebratory-sequence-1-confetti-burst-2-hearts-raining-animation-3-a-short-vibration-on-supported-devices-use-browser-vibration-api-if-available-then-show-the-success-message-english-exactly-best-decision-ever-nhappy-valentine-s-day-anya-and-the-follow-up-text-dinner-chocolate-cuddles-are-officially-planned",
+      "title": "When the user clicks “YES 💕”, play a celebratory sequence: (1) confetti burst, (2) hearts raining animation, (3) a short vibration on supported devices (use browser vibration API if available). Then show the success message (English, exactly): “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text: “Dinner / chocolate / cuddles are officially planned 😏”.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-sweet-ending-screen-text-english-exactly-i-promise-this-app-is-the-only-thing-that-won-t-let-you-say-no-nthank-you-for-being-you-provide-a-clear-gentle-way-to-reach-it-after-the-yes-celebration-automatic-after-a-short-delay-or-via-a-continue-button",
+      "title": "Add the Sweet Ending screen text (English, exactly): “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.” Provide a clear, gentle way to reach it after the YES celebration (automatic after a short delay or via a “Continue” button).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-the-requested-visual-style-across-all-screens-a-cute-valentine-theme-using-pink-red-and-soft-purple-rounded-friendly-typography-gentle-animations-that-are-not-overwhelming-ensure-the-overall-tone-stays-playful-cute-and-not-pushy-or-uncomfortable-e-g-avoid-shaming-language-and-keep-all-microcopy-light",
+      "title": "Apply the requested visual style across all screens: a cute Valentine theme using pink, red, and soft purple; rounded, friendly typography; gentle animations that are not overwhelming. Ensure the overall tone stays playful/cute and not pushy or uncomfortable (e.g., avoid shaming language and keep all microcopy light).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-optional-soft-romantic-background-music-with-an-on-screen-mute-unmute-control-that-defaults-to-muted-or-requires-an-explicit-user-action-to-start-playback-to-respect-browser-autoplay-policies",
+      "title": "Add optional soft romantic background music with an on-screen mute/unmute control that defaults to muted or requires an explicit user action to start playback (to respect browser autoplay policies).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-visual-assets-and-render-them-in-the-ui-as-part-of-the-theme-served-from-frontend-public-assets-generated",
+      "title": "Add generated static visual assets and render them in the UI as part of the theme (served from frontend/public/assets/generated).",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create Valentine micro-app with intro/build-up/question screens, dodging NO button behavior with playful messages, and YES celebration (confetti/hearts/vibration) plus optional sweet ending and romantic styling/music.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Playful Valentine micro-app with multi-screen flow, dodging NO button, and YES celebration",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

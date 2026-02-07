@@ -1,0 +1,226 @@
+{
+  "kind": "build_request",
+  "title": "Playful Valentine micro-app with multi-screen flow, dodging NO button, and YES celebration",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement a 4-step, single-page Valentine micro-app flow with clearly separated screens: (1) Intro screen, (2) Build-up screen, (3) Big Question screen, (4) Sweet Ending screen. Navigation must be driven by button clicks and not require any backend calls.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "“Hi Anya 💕 I made a tiny app just to ask you something…”",
+          "“Build-Up Screen”",
+          "“The Big Question Screen”",
+          "“Optional Sweet Ending Screen”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App starts on an Intro screen and progresses forward via user actions only (no page reloads required).",
+        "The flow includes Intro, Build-up, Big Question, and Sweet Ending screens; Sweet Ending is shown after the YES celebration (or via a clear continue action after YES).",
+        "All screen transitions are smooth and feel \"gentle\" (no harsh flashing or jarring motion)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create the Intro screen with the exact user-facing text (in English) and a single primary button labeled “Continue”. Text must read: “Hi Anya 💕\\nI made a tiny app just to ask you something…”",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "“Hi Anya 💕\nI made a tiny app just to ask you something…”\n\nButton:\n👉 “Continue”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Intro screen displays the specified text exactly (including emoji) and a “Continue” button.",
+        "Clicking “Continue” moves to the Build-up screen."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create the Build-up screen with the exact user-facing text (in English) and a single primary button labeled “I’m ready”. Text must read: “This is a very serious question.\\nPlease answer honestly 😌”",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Text:\n\n“This is a very serious question.\nPlease answer honestly 😌”\n\nButton:\n👉 “I’m ready”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Build-up screen displays the specified text exactly (including emoji) and an “I’m ready” button.",
+        "Clicking “I’m ready” moves to the Big Question screen."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Create the Big Question screen with big, bold centered text: “Anya, will you be my Valentine? 💝”. Under it, render two buttons: “YES 💕” and “NO”. Render a small, subtle line of helper text under the buttons: “(Just kidding… but I really hope you say yes 🥺)”.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Big bold text in the center:\n\n“Anya, will you be my Valentine? 💝”\n\nTwo buttons underneath:\n\n✅ YES 💕\n\n❌ NO",
+          "You can even add a tiny line under the buttons:\n\n“(Just kidding… but I really hope you say yes 🥺)”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Big Question screen shows the question text centered and visually prominent.",
+        "Buttons render with labels exactly: “YES 💕” and “NO”.",
+        "The helper line appears under the buttons and is visually subtle compared to the main question."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement the “dodging NO button” interaction on the Big Question screen: when the user attempts to click/tap the NO button (including pointer hover on desktop and touch/pointer down on mobile), the NO button must evade the pointer by moving (slide/jump) to a new position within a bounded area on the screen. The YES button must remain stationary and easy to click.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "😏 The Fun Twist (Moving NO Button)\n\nWhen she tries to tap NO:\n\nThe button slides away\n\nOr jumps to a random spot\n\nOr shakes and dodges her finger\n\nThe YES button stays still and friendly."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Attempting to interact with NO (pointerenter/mouseover on desktop, pointerdown/touchstart on mobile, and/or click) causes NO to move away instead of being clicked.",
+        "NO’s new position always remains fully visible (not off-screen) and stays within a defined container/bounds.",
+        "YES remains fixed in place during NO dodging interactions.",
+        "NO behavior does not cause layout shifts that move the question text or YES button."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Show playful, non-pressuring feedback messages near the buttons when NO is dodged. Randomly pick from the provided list and display one at a time, briefly (auto-fade) after each dodge attempt. Messages (English, exactly): “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Optional playful messages that appear as she tries:\n\n“Hey hey hey 😳”\n\n“Nice try”\n\n“That button is shy”\n\n“Wrong choice detected 🚫”\n\n“The universe says no… to NO”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After each NO dodge, one message from the list appears and then disappears automatically.",
+        "Messages rotate randomly or pseudo-randomly and do not always repeat the same one.",
+        "Message styling matches the app’s cute/playful tone and does not appear aggressive or guilt-inducing."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "When the user clicks “YES 💕”, play a celebratory sequence: (1) confetti burst, (2) hearts raining animation, (3) a short vibration on supported devices (use browser vibration API if available). Then show the success message (English, exactly): “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text: “Dinner / chocolate / cuddles are officially planned 😏”.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "💥 When She Clicks YES\n\n✨ Confetti explosion\n💖 Hearts raining\n🎉 Little vibration (if possible)\n\nMessage:\n\n“Best decision ever 🥰\nHappy Valentine’s Day, Anya ❤️”\n\nOptional follow-up text:\n\n“Dinner / chocolate / cuddles are officially planned 😏”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking YES triggers a visible confetti effect and a visible hearts-rain effect.",
+        "On supported devices, a vibration occurs; on unsupported devices, the app continues without errors.",
+        "After the celebration begins, the success message and follow-up text are shown exactly as specified.",
+        "After YES is clicked, the NO button is no longer relevant (either hidden/disabled or the screen content changes so it can’t be interacted with)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add the Sweet Ending screen text (English, exactly): “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.” Provide a clear, gentle way to reach it after the YES celebration (automatic after a short delay or via a “Continue” button).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "🥹 Optional Sweet Ending Screen\n\n“I promise this app is the only thing that won’t let you say no 😉\nThank you for being you.”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Sweet Ending screen displays the specified text exactly (including emoji).",
+        "User can reliably reach the Sweet Ending after clicking YES (either automatically after the celebration or via an explicit button)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Apply the requested visual style across all screens: a cute Valentine theme using pink, red, and soft purple; rounded, friendly typography; gentle animations that are not overwhelming. Ensure the overall tone stays playful/cute and not pushy or uncomfortable (e.g., avoid shaming language and keep all microcopy light).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "🎨 Visual Style\n\nColors: pink, red, soft purple\n\nFont: rounded, friendly\n\nAnimations: gentle, not overwhelming\n\n⚠️ Important Tone Tip\n\nMake sure it feels:\n✅ Playful\n✅ Cute\n❌ Not pushy or uncomfortable"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All screens share a consistent palette (pink/red/soft purple) and rounded, friendly typography.",
+        "Animations (screen transitions, message fades, button motions) are smooth and not overly fast or intense.",
+        "Copy and interactions feel playful rather than coercive; no additional text beyond what’s specified is added that increases pressure."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add optional soft romantic background music with an on-screen mute/unmute control that defaults to muted or requires an explicit user action to start playback (to respect browser autoplay policies).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Music (optional): soft romantic tune"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A mute/unmute (or play/pause) control is visible and works.",
+        "Music does not autoplay with sound without a user gesture; initial state is muted or not playing until user interacts.",
+        "Toggling audio does not reset the current screen state."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Add generated static visual assets and render them in the UI as part of the theme (served from frontend/public/assets/generated).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "🎨 Visual Style\n\nColors: pink, red, soft purple"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "At least one generated background/pattern asset is visibly used in the app styling (without harming readability)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Use English for all user-facing text.",
+    "Do not rely on any external databases or non-Internet-Computer backend services.",
+    "Do not modify any files under frontend/src/components/ui or any other immutablePaths (compose UI components instead)."
+  ],
+  "nonGoals": [
+    "User accounts or authentication (Internet Identity).",
+    "Persisting user responses or analytics.",
+    "Multiplayer/sharing/social integrations.",
+    "Any behavior that attempts to bypass user consent outside the playful NO-button gag (keep tone light and non-coercive)."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Seamless cute heart pattern background in pink/red/soft-purple palette (valentine-pattern.dim_1600x900.png)",
+      "Soft gradient background with subtle bokeh/hearts in pink/red/soft-purple palette (valentine-gradient-bg.dim_1600x900.png)",
+      "Minimal rounded heart icon sticker style, soft purple/pink tones (heart-sticker-icon.dim_256x256.png)"
+    ],
+    "edits": []
+  }
+}

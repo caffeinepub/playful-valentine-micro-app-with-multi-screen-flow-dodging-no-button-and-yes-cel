@@ -1,0 +1,222 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-a-4-step-single-page-valentine-micro-app-flow-with-clearly-separated-screens-1-intro-screen-2-build-up-screen-3-big-question-screen-4-sweet-ending-screen-navigation-must-be-driven-by-button-clicks-and-not-require-any-backend-calls",
+      "featureTitle": "Implement a 4-step, single-page Valentine micro-app flow with clearly separated screens: (1) Intro screen, (2) Build-up screen, (3) Big Question screen, (4) Sweet Ending screen. Navigation must be driven by button clicks and not require any backend calls.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ValentineScreenShell.tsx",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-the-intro-screen-with-the-exact-user-facing-text-in-english-and-a-single-primary-button-labeled-continue-text-must-read-hi-anya-ni-made-a-tiny-app-just-to-ask-you-something",
+      "featureTitle": "Create the Intro screen with the exact user-facing text (in English) and a single primary button labeled “Continue”. Text must read: “Hi Anya 💕\\nI made a tiny app just to ask you something…”",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/screens/IntroScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-the-build-up-screen-with-the-exact-user-facing-text-in-english-and-a-single-primary-button-labeled-i-m-ready-text-must-read-this-is-a-very-serious-question-nplease-answer-honestly",
+      "featureTitle": "Create the Build-up screen with the exact user-facing text (in English) and a single primary button labeled “I’m ready”. Text must read: “This is a very serious question.\\nPlease answer honestly 😌”",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/screens/BuildUpScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-the-big-question-screen-with-big-bold-centered-text-anya-will-you-be-my-valentine-under-it-render-two-buttons-yes-and-no-render-a-small-subtle-line-of-helper-text-under-the-buttons-just-kidding-but-i-really-hope-you-say-yes",
+      "featureTitle": "Create the Big Question screen with big, bold centered text: “Anya, will you be my Valentine? 💝”. Under it, render two buttons: “YES 💕” and “NO”. Render a small, subtle line of helper text under the buttons: “(Just kidding… but I really hope you say yes 🥺)”.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/screens/BigQuestionScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-dodging-no-button-interaction-on-the-big-question-screen-when-the-user-attempts-to-click-tap-the-no-button-including-pointer-hover-on-desktop-and-touch-pointer-down-on-mobile-the-no-button-must-evade-the-pointer-by-moving-slide-jump-to-a-new-position-within-a-bounded-area-on-the-screen-the-yes-button-must-remain-stationary-and-easy-to-click",
+      "featureTitle": "Implement the “dodging NO button” interaction on the Big Question screen: when the user attempts to click/tap the NO button (including pointer hover on desktop and touch/pointer down on mobile), the NO button must evade the pointer by moving (slide/jump) to a new position within a bounded area on the screen. The YES button must remain stationary and easy to click.",
+      "files": [
+        "frontend/src/hooks/useDodgingNoButton.ts",
+        "frontend/src/index.css",
+        "frontend/src/screens/BigQuestionScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-show-playful-non-pressuring-feedback-messages-near-the-buttons-when-no-is-dodged-randomly-pick-from-the-provided-list-and-display-one-at-a-time-briefly-auto-fade-after-each-dodge-attempt-messages-english-exactly-hey-hey-hey-nice-try-that-button-is-shy-wrong-choice-detected-the-universe-says-no-to-no",
+      "featureTitle": "Show playful, non-pressuring feedback messages near the buttons when NO is dodged. Randomly pick from the provided list and display one at a time, briefly (auto-fade) after each dodge attempt. Messages (English, exactly): “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”.",
+      "files": [
+        "frontend/src/components/DodgeMessageToast.tsx",
+        "frontend/src/index.css",
+        "frontend/src/screens/BigQuestionScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-when-the-user-clicks-yes-play-a-celebratory-sequence-1-confetti-burst-2-hearts-raining-animation-3-a-short-vibration-on-supported-devices-use-browser-vibration-api-if-available-then-show-the-success-message-english-exactly-best-decision-ever-nhappy-valentine-s-day-anya-and-the-follow-up-text-dinner-chocolate-cuddles-are-officially-planned",
+      "featureTitle": "When the user clicks “YES 💕”, play a celebratory sequence: (1) confetti burst, (2) hearts raining animation, (3) a short vibration on supported devices (use browser vibration API if available). Then show the success message (English, exactly): “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text: “Dinner / chocolate / cuddles are officially planned 😏”.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ConfettiBurst.tsx",
+        "frontend/src/components/HeartsRain.tsx",
+        "frontend/src/screens/YesCelebrationScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-the-sweet-ending-screen-text-english-exactly-i-promise-this-app-is-the-only-thing-that-won-t-let-you-say-no-nthank-you-for-being-you-provide-a-clear-gentle-way-to-reach-it-after-the-yes-celebration-automatic-after-a-short-delay-or-via-a-continue-button",
+      "featureTitle": "Add the Sweet Ending screen text (English, exactly): “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.” Provide a clear, gentle way to reach it after the YES celebration (automatic after a short delay or via a “Continue” button).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/screens/SweetEndingScreen.tsx",
+        "frontend/src/screens/YesCelebrationScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-the-requested-visual-style-across-all-screens-a-cute-valentine-theme-using-pink-red-and-soft-purple-rounded-friendly-typography-gentle-animations-that-are-not-overwhelming-ensure-the-overall-tone-stays-playful-cute-and-not-pushy-or-uncomfortable-e-g-avoid-shaming-language-and-keep-all-microcopy-light",
+      "featureTitle": "Apply the requested visual style across all screens: a cute Valentine theme using pink, red, and soft purple; rounded, friendly typography; gentle animations that are not overwhelming. Ensure the overall tone stays playful/cute and not pushy or uncomfortable (e.g., avoid shaming language and keep all microcopy light).",
+      "files": [
+        "frontend/src/components/ValentineScreenShell.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-optional-soft-romantic-background-music-with-an-on-screen-mute-unmute-control-that-defaults-to-muted-or-requires-an-explicit-user-action-to-start-playback-to-respect-browser-autoplay-policies",
+      "featureTitle": "Add optional soft romantic background music with an on-screen mute/unmute control that defaults to muted or requires an explicit user action to start playback (to respect browser autoplay policies).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AudioToggle.tsx",
+        "frontend/src/hooks/useRomanticMusic.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-visual-assets-and-render-them-in-the-ui-as-part-of-the-theme-served-from-frontend-public-assets-generated",
+      "featureTitle": "Add generated static visual assets and render them in the UI as part of the theme (served from frontend/public/assets/generated).",
+      "files": [
+        "frontend/src/components/HeartsRain.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

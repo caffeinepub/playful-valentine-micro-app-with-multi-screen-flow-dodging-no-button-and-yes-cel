@@ -1,0 +1,18 @@
+{
+  "frontend/src/App.tsx": "Main app component managing the 4-screen Valentine flow state (intro, buildup, question, celebration, ending) with screen transitions and persistent audio toggle.",
+  "frontend/src/screens/IntroScreen.tsx": "First screen displaying the greeting message \"Hi Anya 💕\" with a Continue button to advance to the build-up screen.",
+  "frontend/src/screens/BuildUpScreen.tsx": "Second screen showing the \"serious question\" message with an \"I'm ready\" button to advance to the big question.",
+  "frontend/src/screens/BigQuestionScreen.tsx": "Main question screen with the Valentine proposal, stationary YES button, dodging NO button with evasion behavior, and playful feedback messages.",
+  "frontend/src/screens/YesCelebrationScreen.tsx": "Celebration screen triggered by YES click, showing success message with confetti, hearts rain, vibration, and timed continue button.",
+  "frontend/src/screens/SweetEndingScreen.tsx": "Final sweet ending screen with the closing message thanking Anya.",
+  "frontend/src/components/ValentineScreenShell.tsx": "Reusable layout wrapper providing consistent centered content container and Valentine-themed background for all screens.",
+  "frontend/src/components/ConfettiBurst.tsx": "Confetti animation component generating 50 colorful falling particles with randomized positions and timing.",
+  "frontend/src/components/HeartsRain.tsx": "Hearts rain animation component using the generated heart sticker asset with randomized falling animations.",
+  "frontend/src/components/DodgeMessageToast.tsx": "Toast notification component displaying playful feedback messages when the NO button is dodged.",
+  "frontend/src/components/AudioToggle.tsx": "Persistent audio control button in top-right corner with volume icon toggle for background music.",
+  "frontend/src/hooks/useDodgingNoButton.ts": "Custom hook managing NO button evasion behavior with randomized position calculations and pointer event handlers for both desktop hover and mobile touch.",
+  "frontend/src/hooks/useRomanticMusic.ts": "Custom hook managing background music playback state with play/pause toggle respecting browser autoplay policies.",
+  "frontend/src/hooks/useQueries.ts": "Placeholder file for React Query hooks (intentionally minimal as no backend queries are needed).",
+  "frontend/src/index.css": "Global styles with Valentine's Day OKLCH color palette (pink/red/purple), custom animations (fade, bounce, confetti, hearts), and background pattern integration.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with Valentine color tokens, increased border radius values, custom shadows, and rounded font families."
+}

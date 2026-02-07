@@ -1,0 +1,291 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Playful Valentine micro-app (4-screen flow with dodging NO + YES celebration)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement a 4-step single-page flow with gentle, button-driven transitions and no backend calls.",
+      "acceptanceCriteria": [
+        "App starts on an Intro screen and progresses forward via user actions only (no page reloads required).",
+        "The flow includes Intro, Build-up, Big Question, and Sweet Ending screens; Sweet Ending is shown after the YES celebration (or via a clear continue action after YES).",
+        "All screen transitions are smooth and feel \"gentle\" (no harsh flashing or jarring motion)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the single-page state-driven flow (Intro → Build-up → Big Question → Sweet Ending) with gentle transitions, ensuring navigation is only via button clicks and does not perform any backend calls."
+        },
+        {
+          "path": "frontend/src/components/ValentineScreenShell.tsx",
+          "operation": "create",
+          "description": "Create a shared screen layout wrapper (centered content, consistent spacing) and a simple transition container to keep screen changes gentle and visually consistent."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the app renders the new App component cleanly and that providers do not interfere with the single-page, click-driven flow (no authentication prompts or backend calls triggered by the flow)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Create the Intro screen with exact specified text and a “Continue” button advancing to Build-up.",
+      "acceptanceCriteria": [
+        "Intro screen displays the specified text exactly (including emoji) and a “Continue” button.",
+        "Clicking “Continue” moves to the Build-up screen."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/screens/IntroScreen.tsx",
+          "operation": "create",
+          "description": "Create the Intro screen UI with the exact text “Hi Anya 💕\\nI made a tiny app just to ask you something…” and a single primary “Continue” button that advances the flow."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire IntroScreen into the flow as the initial screen and connect the “Continue” action to navigate to the Build-up screen."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create the Build-up screen with exact specified text and an “I’m ready” button advancing to Big Question.",
+      "acceptanceCriteria": [
+        "Build-up screen displays the specified text exactly (including emoji) and an “I’m ready” button.",
+        "Clicking “I’m ready” moves to the Big Question screen."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/screens/BuildUpScreen.tsx",
+          "operation": "create",
+          "description": "Create the Build-up screen UI with the exact text “This is a very serious question.\\nPlease answer honestly 😌” and a single primary “I’m ready” button that advances the flow."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire BuildUpScreen into the flow and connect “I’m ready” to navigate to the Big Question screen."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Create the Big Question screen with prominent centered question text, YES/NO buttons, and subtle helper text.",
+      "acceptanceCriteria": [
+        "Big Question screen shows the question text centered and visually prominent.",
+        "Buttons render with labels exactly: “YES 💕” and “NO”.",
+        "The helper line appears under the buttons and is visually subtle compared to the main question."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/screens/BigQuestionScreen.tsx",
+          "operation": "create",
+          "description": "Create the Big Question screen UI with big, bold centered text “Anya, will you be my Valentine? 💝”, two buttons labeled exactly “YES 💕” and “NO”, and subtle helper text “(Just kidding… but I really hope you say yes 🥺)”."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire BigQuestionScreen into the flow and connect YES/NO interactions to the appropriate in-app behaviors (YES triggers celebration sequence; NO triggers dodge behavior handled within the screen)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement the NO button dodge interaction within bounded area without shifting layout; YES remains stationary.",
+      "acceptanceCriteria": [
+        "Attempting to interact with NO (pointerenter/mouseover on desktop, pointerdown/touchstart on mobile, and/or click) causes NO to move away instead of being clicked.",
+        "NO’s new position always remains fully visible (not off-screen) and stays within a defined container/bounds.",
+        "YES remains fixed in place during NO dodging interactions.",
+        "NO behavior does not cause layout shifts that move the question text or YES button."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useDodgingNoButton.ts",
+          "operation": "create",
+          "description": "Create a hook that computes safe randomized positions for the NO button inside a bounded container and exposes handlers for pointerenter and pointerdown/touchstart to trigger evasion without causing layout shifts."
+        },
+        {
+          "path": "frontend/src/screens/BigQuestionScreen.tsx",
+          "operation": "modify",
+          "description": "Integrate dodging behavior: render NO as absolutely positioned within a fixed-size/relative bounds container; bind pointer interactions to move it, keeping the YES button in a stable, non-moving position."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add minimal CSS to support stable layout (fixed button row sizing), smooth NO movement transitions (gentle transform/translate), and prevent jarring motion while preserving readability."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Show brief, playful randomized feedback messages near the buttons after each NO dodge with auto-fade.",
+      "acceptanceCriteria": [
+        "After each NO dodge, one message from the list appears and then disappears automatically.",
+        "Messages rotate randomly or pseudo-randomly and do not always repeat the same one.",
+        "Message styling matches the app’s cute/playful tone and does not appear aggressive or guilt-inducing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/DodgeMessageToast.tsx",
+          "operation": "create",
+          "description": "Create a small message component to display one randomized message at a time near the buttons, with an auto-fade/auto-hide animation."
+        },
+        {
+          "path": "frontend/src/screens/BigQuestionScreen.tsx",
+          "operation": "modify",
+          "description": "After each NO dodge, randomly select and show exactly one of: “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”, then auto-hide it."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add gentle fade-in/fade-out styling/animation for the dodge feedback messages to keep tone cute and motion non-overwhelming."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "On YES click: confetti burst, hearts rain, vibration (if supported), then show exact success + follow-up text and remove NO interaction.",
+      "acceptanceCriteria": [
+        "Clicking YES triggers a visible confetti effect and a visible hearts-rain effect.",
+        "On supported devices, a vibration occurs; on unsupported devices, the app continues without errors.",
+        "After the celebration begins, the success message and follow-up text are shown exactly as specified.",
+        "After YES is clicked, the NO button is no longer relevant (either hidden/disabled or the screen content changes so it can’t be interacted with)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ConfettiBurst.tsx",
+          "operation": "create",
+          "description": "Create a lightweight on-screen confetti burst effect (frontend-only) that can be triggered from the YES action."
+        },
+        {
+          "path": "frontend/src/components/HeartsRain.tsx",
+          "operation": "create",
+          "description": "Create a hearts-raining overlay animation (frontend-only) that runs after YES is clicked; use the generated heart sticker icon as a visual element where appropriate."
+        },
+        {
+          "path": "frontend/src/screens/YesCelebrationScreen.tsx",
+          "operation": "create",
+          "description": "Create a celebration view that triggers confetti + hearts rain and shows the exact message “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text “Dinner / chocolate / cuddles are officially planned 😏”."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire YES to transition into the celebration view, call the browser vibration API safely (feature-detected), and ensure NO is hidden/disabled by switching screen content so NO can’t be interacted with after YES."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add Sweet Ending screen with exact text and a clear path to reach it after YES celebration (delay or Continue).",
+      "acceptanceCriteria": [
+        "Sweet Ending screen displays the specified text exactly (including emoji).",
+        "User can reliably reach the Sweet Ending after clicking YES (either automatically after the celebration or via an explicit button)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/screens/SweetEndingScreen.tsx",
+          "operation": "create",
+          "description": "Create the Sweet Ending screen UI with the exact text “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.”"
+        },
+        {
+          "path": "frontend/src/screens/YesCelebrationScreen.tsx",
+          "operation": "modify",
+          "description": "Add a gentle, clear path to Sweet Ending after the celebration (either an automatic timed transition after a short delay and/or a visible “Continue” action)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire SweetEndingScreen into the flow and ensure it is reachable after the YES celebration via the chosen continue mechanism."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Apply consistent cute Valentine visual theme (pink/red/soft purple), rounded typography, and gentle animations without pushy tone.",
+      "acceptanceCriteria": [
+        "All screens share a consistent palette (pink/red/soft purple) and rounded, friendly typography.",
+        "Animations (screen transitions, message fades, button motions) are smooth and not overly fast or intense.",
+        "Copy and interactions feel playful rather than coercive; no additional text beyond what’s specified is added that increases pressure."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define global theme tokens and base styles for a Valentine palette (pink/red/soft purple), rounded friendly typography, and gentle animation timings; ensure no additional pushy microcopy is introduced via styling elements."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme (colors/radius/animations) to support the Valentine palette and softer rounded visuals consistently across screens."
+        },
+        {
+          "path": "frontend/src/components/ValentineScreenShell.tsx",
+          "operation": "modify",
+          "description": "Ensure consistent spacing, readable contrast over backgrounds, and gentle transition behaviors across all screens using the shared layout wrapper."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add optional soft romantic background music with visible mute/unmute control; default muted or requires user action; does not reset screen state.",
+      "acceptanceCriteria": [
+        "A mute/unmute (or play/pause) control is visible and works.",
+        "Music does not autoplay with sound without a user gesture; initial state is muted or not playing until user interacts.",
+        "Toggling audio does not reset the current screen state."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useRomanticMusic.ts",
+          "operation": "create",
+          "description": "Implement a small audio controller hook (using HTMLAudioElement or Web Audio) that starts only after explicit user interaction, defaults to muted/not playing, and exposes toggle controls without affecting the app’s screen state."
+        },
+        {
+          "path": "frontend/src/components/AudioToggle.tsx",
+          "operation": "create",
+          "description": "Create a small on-screen mute/unmute (or play/pause) control UI that connects to the romantic music hook and stays visible across screens."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Render the AudioToggle persistently within the app shell so audio can be toggled at any time without changing the current screen, and ensure playback only starts after a user gesture."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Add generated static visual assets under frontend/public/assets/generated and visibly use at least one background/pattern in the UI theme.",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "At least one generated background/pattern asset is visibly used in the app styling (without harming readability)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/valentine-pattern.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated image asset file at frontend/public/assets/generated/valentine-pattern.dim_1600x900.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png",
+          "operation": "create",
+          "description": "Add the generated image asset file at frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated image asset file at frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Wire the generated backgrounds into the app styling by applying at least one of the generated background assets (frontend/public/assets/generated/valentine-pattern.dim_1600x900.png and/or frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png) in a way that preserves text readability."
+        },
+        {
+          "path": "frontend/src/components/HeartsRain.tsx",
+          "operation": "modify",
+          "description": "Use the generated heart icon asset (frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png) as a themed element in the hearts rain animation and/or subtle decorative UI."
+        }
+      ]
+    }
+  ]
+}

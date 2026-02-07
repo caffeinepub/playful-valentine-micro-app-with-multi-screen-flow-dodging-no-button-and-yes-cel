@@ -1,0 +1,294 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T03:00:19.492Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 11,
+    "implemented": 11,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Implement a 4-step, single-page Valentine micro-app flow with clearly separated screens: (1) Intro screen, (2) Build-up screen, (3) Big Question screen, (4) Sweet Ending screen. Navigation must be driven by button clicks and not require any backend calls.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/ValentineScreenShell.tsx",
+          "frontend/src/main.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/ValentineScreenShell.tsx",
+          "frontend/src/main.tsx"
+        ]
+      },
+      {
+        "id": "REQ-10",
+        "summary": "Add optional soft romantic background music with an on-screen mute/unmute control that defaults to muted or requires an explicit user action to start playback (to respect browser autoplay policies).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useRomanticMusic.ts",
+          "frontend/src/components/AudioToggle.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useRomanticMusic.ts",
+          "frontend/src/components/AudioToggle.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-11",
+        "summary": "Add generated static visual assets and render them in the UI as part of the theme (served from frontend/public/assets/generated).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/generated/valentine-pattern.dim_1600x900.png",
+          "frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png",
+          "frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png",
+          "frontend/src/index.css",
+          "frontend/src/components/HeartsRain.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/public/assets/generated/valentine-pattern.dim_1600x900.png",
+          "frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png",
+          "frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png",
+          "frontend/src/index.css",
+          "frontend/src/components/HeartsRain.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Create the Intro screen with the exact user-facing text (in English) and a single primary button labeled “Continue”. Text must read: “Hi Anya 💕\\nI made a tiny app just to ask you something…”",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/screens/IntroScreen.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/screens/IntroScreen.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Create the Build-up screen with the exact user-facing text (in English) and a single primary button labeled “I’m ready”. Text must read: “This is a very serious question.\\nPlease answer honestly 😌”",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/screens/BuildUpScreen.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/screens/BuildUpScreen.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Create the Big Question screen with big, bold centered text: “Anya, will you be my Valentine? 💝”. Under it, render two buttons: “YES 💕” and “NO”. Render a small, subtle line of helper text under the buttons: “(Just kidding… but I really hope you say yes 🥺)”.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/screens/BigQuestionScreen.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/screens/BigQuestionScreen.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Implement the “dodging NO button” interaction on the Big Question screen: when the user attempts to click/tap the NO button (including pointer hover on desktop and touch/pointer down on mobile), the NO button must evade the pointer by moving (slide/jump) to a new position within a bounded area on the screen. The YES button must remain stationary and easy to click.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useDodgingNoButton.ts",
+          "frontend/src/screens/BigQuestionScreen.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useDodgingNoButton.ts",
+          "frontend/src/screens/BigQuestionScreen.tsx",
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Show playful, non-pressuring feedback messages near the buttons when NO is dodged. Randomly pick from the provided list and display one at a time, briefly (auto-fade) after each dodge attempt. Messages (English, exactly): “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/DodgeMessageToast.tsx",
+          "frontend/src/screens/BigQuestionScreen.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/DodgeMessageToast.tsx",
+          "frontend/src/screens/BigQuestionScreen.tsx",
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "When the user clicks “YES 💕”, play a celebratory sequence: (1) confetti burst, (2) hearts raining animation, (3) a short vibration on supported devices (use browser vibration API if available). Then show the success message (English, exactly): “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text: “Dinner / chocolate / cuddles are officially planned 😏”.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/ConfettiBurst.tsx",
+          "frontend/src/components/HeartsRain.tsx",
+          "frontend/src/screens/YesCelebrationScreen.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ConfettiBurst.tsx",
+          "frontend/src/components/HeartsRain.tsx",
+          "frontend/src/screens/YesCelebrationScreen.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Add the Sweet Ending screen text (English, exactly): “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.” Provide a clear, gentle way to reach it after the YES celebration (automatic after a short delay or via a “Continue” button).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/screens/SweetEndingScreen.tsx",
+          "frontend/src/screens/YesCelebrationScreen.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/screens/SweetEndingScreen.tsx",
+          "frontend/src/screens/YesCelebrationScreen.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Apply the requested visual style across all screens: a cute Valentine theme using pink, red, and soft purple; rounded, friendly typography; gentle animations that are not overwhelming. Ensure the overall tone stays playful/cute and not pushy or uncomfortable (e.g., avoid shaming language and keep all microcopy light).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/ValentineScreenShell.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/ValentineScreenShell.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png",
+    "frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png",
+    "frontend/public/assets/generated/valentine-pattern.dim_1600x900.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/AudioToggle.tsx",
+    "frontend/src/components/ConfettiBurst.tsx",
+    "frontend/src/components/DodgeMessageToast.tsx",
+    "frontend/src/components/HeartsRain.tsx",
+    "frontend/src/components/ValentineScreenShell.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useDodgingNoButton.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useRomanticMusic.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/screens/BigQuestionScreen.tsx",
+    "frontend/src/screens/BuildUpScreen.tsx",
+    "frontend/src/screens/IntroScreen.tsx",
+    "frontend/src/screens/SweetEndingScreen.tsx",
+    "frontend/src/screens/YesCelebrationScreen.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
