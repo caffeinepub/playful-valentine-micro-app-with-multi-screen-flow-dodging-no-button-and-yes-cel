@@ -2,12 +2,14 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-implement-a-4-step-single-page-valentine-micro-app-flow-with-clearly-separated-screens-1-intro-screen-2-build-up-screen-3-big-question-screen-4-sweet-ending-screen-navigation-must-be-driven-by-button-clicks-and-not-require-any-backend-calls",
-      "featureTitle": "Implement a 4-step, single-page Valentine micro-app flow with clearly separated screens: (1) Intro screen, (2) Build-up screen, (3) Big Question screen, (4) Sweet Ending screen. Navigation must be driven by button clicks and not require any backend calls.",
+      "featureId": "feature-replace-the-current-screen-flow-in-frontend-src-app-tsx-with-the-new-mini-game-flow-screens-and-navigation-using-only-client-side-state-transitions-no-backend-calls-1-game-intro-2-level-1-3-final-level-4-real-question-5-yes-celebration-6-optional-extra-cute-ending-with-replay-the-replay-action-must-restart-the-game-from-game-intro-or-level-1-and-reset-any-per-level-counters-timers-messages",
+      "featureTitle": "Replace the current screen flow in frontend/src/App.tsx with the new mini-game flow screens and navigation, using only client-side state transitions (no backend calls): (1) Game Intro, (2) Level 1, (3) Final Level, (4) Real Question, (5) YES Celebration, (6) Optional Extra-Cute Ending with Replay. The Replay action must restart the game from Game Intro (or Level 1) and reset any per-level counters/timers/messages.",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/ValentineScreenShell.tsx",
-        "frontend/src/main.tsx"
+        "frontend/src/screens/ExtraCuteEndingScreen.tsx",
+        "frontend/src/screens/FinalLevelScreen.tsx",
+        "frontend/src/screens/Level1Screen.tsx",
+        "frontend/src/screens/RealQuestionScreen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,15 +19,14 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-24"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-the-intro-screen-with-the-exact-user-facing-text-in-english-and-a-single-primary-button-labeled-continue-text-must-read-hi-anya-ni-made-a-tiny-app-just-to-ask-you-something",
-      "featureTitle": "Create the Intro screen with the exact user-facing text (in English) and a single primary button labeled “Continue”. Text must read: “Hi Anya 💕\\nI made a tiny app just to ask you something…”",
+      "featureId": "feature-update-the-existing-intro-screen-ui-to-match-the-new-game-intro-screen-copy-and-primary-action-user-facing-text-must-be-exactly-hi-anya-nwelcome-to-a-tiny-game-i-made-just-for-you-your-mission-find-the-no-button-primary-button-label-must-be-exactly-start-game-keep-the-screen-mobile-first-centered-with-a-thumb-friendly-bottom-cta-area",
+      "featureTitle": "Update the existing Intro screen UI to match the new Game Intro screen copy and primary action. User-facing text must be exactly:\n- “Hi Anya 💕\\nWelcome to a tiny game I made just for you.”\n- “Your mission: find the NO button 😌”\nPrimary button label must be exactly: “🎮 Start Game”. Keep the screen mobile-first, centered, with a thumb-friendly bottom CTA area.",
       "files": [
-        "frontend/src/App.tsx",
         "frontend/src/screens/IntroScreen.tsx"
       ],
       "components": [
@@ -36,55 +37,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-2"
+        "REQ-25"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-the-build-up-screen-with-the-exact-user-facing-text-in-english-and-a-single-primary-button-labeled-i-m-ready-text-must-read-this-is-a-very-serious-question-nplease-answer-honestly",
-      "featureTitle": "Create the Build-up screen with the exact user-facing text (in English) and a single primary button labeled “I’m ready”. Text must read: “This is a very serious question.\\nPlease answer honestly 😌”",
+      "featureId": "feature-implement-level-1-screen-the-game-begins-with-the-following-exact-user-facing-header-text-at-the-top-level-1-find-the-no-button-the-screen-must-include-animated-distractions-hearts-floating-around-a-teddy-walking-back-and-forth-and-flowers-popping-in-and-out-ensure-animations-are-lightweight-and-mobile-optimized",
+      "featureTitle": "Implement Level 1 screen (“The Game Begins”) with the following exact user-facing header text at the top: “Level 1: Find the NO button ❌”. The screen must include animated distractions: hearts floating around, a teddy walking back and forth, and flowers popping in and out. Ensure animations are lightweight and mobile-optimized.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/screens/BuildUpScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-the-big-question-screen-with-big-bold-centered-text-anya-will-you-be-my-valentine-under-it-render-two-buttons-yes-and-no-render-a-small-subtle-line-of-helper-text-under-the-buttons-just-kidding-but-i-really-hope-you-say-yes",
-      "featureTitle": "Create the Big Question screen with big, bold centered text: “Anya, will you be my Valentine? 💝”. Under it, render two buttons: “YES 💕” and “NO”. Render a small, subtle line of helper text under the buttons: “(Just kidding… but I really hope you say yes 🥺)”.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/screens/BigQuestionScreen.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-the-dodging-no-button-interaction-on-the-big-question-screen-when-the-user-attempts-to-click-tap-the-no-button-including-pointer-hover-on-desktop-and-touch-pointer-down-on-mobile-the-no-button-must-evade-the-pointer-by-moving-slide-jump-to-a-new-position-within-a-bounded-area-on-the-screen-the-yes-button-must-remain-stationary-and-easy-to-click",
-      "featureTitle": "Implement the “dodging NO button” interaction on the Big Question screen: when the user attempts to click/tap the NO button (including pointer hover on desktop and touch/pointer down on mobile), the NO button must evade the pointer by moving (slide/jump) to a new position within a bounded area on the screen. The YES button must remain stationary and easy to click.",
-      "files": [
-        "frontend/src/hooks/useDodgingNoButton.ts",
+        "frontend/src/components/Level1Distractions.tsx",
         "frontend/src/index.css",
-        "frontend/src/screens/BigQuestionScreen.tsx"
+        "frontend/src/screens/Level1Screen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -94,17 +57,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-26"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-show-playful-non-pressuring-feedback-messages-near-the-buttons-when-no-is-dodged-randomly-pick-from-the-provided-list-and-display-one-at-a-time-briefly-auto-fade-after-each-dodge-attempt-messages-english-exactly-hey-hey-hey-nice-try-that-button-is-shy-wrong-choice-detected-the-universe-says-no-to-no",
-      "featureTitle": "Show playful, non-pressuring feedback messages near the buttons when NO is dodged. Randomly pick from the provided list and display one at a time, briefly (auto-fade) after each dodge attempt. Messages (English, exactly): “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”.",
+      "featureId": "feature-implement-the-level-1-hidden-no-button-mechanic-a-real-no-button-appears-for-approximately-0-5-seconds-then-disappears-and-repeatedly-relocates-to-new-positions-the-no-button-must-sometimes-appear-visually-behind-partially-occluded-by-one-of-the-distraction-elements-a-teddy-a-flower-or-a-chocolate-when-the-user-taps-the-area-where-the-no-button-last-appeared-the-no-button-must-immediately-move-hide-again-and-trigger-a-light-vibration-using-the-browser-vibration-api-when-available",
+      "featureTitle": "Implement the Level 1 “hidden NO button” mechanic: a real NO button appears for approximately 0.5 seconds, then disappears, and repeatedly relocates to new positions. The NO button must sometimes appear visually ‘behind’ (partially occluded by) one of the distraction elements: a teddy, a flower, or a chocolate. When the user taps the area where the NO button last appeared, the NO button must immediately move/hide again and trigger a light vibration (using the browser Vibration API when available).",
       "files": [
-        "frontend/src/components/DodgeMessageToast.tsx",
-        "frontend/src/index.css",
-        "frontend/src/screens/BigQuestionScreen.tsx"
+        "frontend/src/components/Level1Occluders.tsx",
+        "frontend/src/hooks/useHiddenNoButton.ts",
+        "frontend/src/screens/Level1Screen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -114,17 +77,71 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-6"
+        "REQ-27"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-when-the-user-clicks-yes-play-a-celebratory-sequence-1-confetti-burst-2-hearts-raining-animation-3-a-short-vibration-on-supported-devices-use-browser-vibration-api-if-available-then-show-the-success-message-english-exactly-best-decision-ever-nhappy-valentine-s-day-anya-and-the-follow-up-text-dinner-chocolate-cuddles-are-officially-planned",
-      "featureTitle": "When the user clicks “YES 💕”, play a celebratory sequence: (1) confetti burst, (2) hearts raining animation, (3) a short vibration on supported devices (use browser vibration API if available). Then show the success message (English, exactly): “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text: “Dinner / chocolate / cuddles are officially planned 😏”.",
+      "featureId": "feature-add-level-1-funny-pop-up-feedback-messages-that-appear-briefly-after-each-miss-escape-randomly-select-and-display-one-of-the-following-exact-messages-nope-missed-it-it-ran-away-try-again-after-a-few-tries-define-a-consistent-threshold-e-g-4-misses-also-show-the-exact-progress-line-hmm-this-is-harder-than-it-looks",
+      "featureTitle": "Add Level 1 funny pop-up feedback messages that appear briefly after each miss/escape. Randomly select and display one of the following exact messages: “Nope 😜”, “Missed it!”, “It ran away!”, “Try again 😂”. After a few tries (define a consistent threshold, e.g., 4 misses), also show the exact progress line: “Hmm… this is harder than it looks 🤔”.",
+      "files": [
+        "frontend/src/screens/Level1Screen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-28"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-final-level-screen-with-the-exact-user-facing-text-final-level-last-chance-the-screen-must-show-multiple-fake-tappable-buttons-with-the-exact-labels-no-not-this-one-almost-each-fake-button-must-vanish-when-tapped-after-the-fake-buttons-sequence-the-screen-must-clear-and-advance-to-the-real-question-screen",
+      "featureTitle": "Implement the Final Level screen with the exact user-facing text: “Final Level: Last chance 😏”. The screen must show multiple fake tappable buttons with the exact labels: “NO?”, “Not this one”, “Almost!”. Each fake button must vanish when tapped. After the fake buttons sequence, the screen must clear and advance to the Real Question screen.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/screens/FinalLevelScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-29"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-real-question-screen-with-slowed-down-pacing-feel-and-soft-music-behavior-keep-the-global-audiotoggle-but-on-this-screen-emphasize-the-soft-music-moment-by-presenting-the-content-in-a-calmer-animation-cadence-e-g-slower-fades-user-facing-text-must-be-exactly-two-lines-okay-anya-no-more-games-will-you-be-my-valentine-render-one-clear-primary-button-labeled-exactly-yes-do-not-render-any-no-button-on-this-screen",
+      "featureTitle": "Implement the Real Question screen with slowed-down pacing/feel and soft music behavior: keep the global AudioToggle, but on this screen emphasize the ‘soft music’ moment by presenting the content in a calmer animation cadence (e.g., slower fades). User-facing text must be exactly two lines:\n- “Okay Anya… no more games.”\n- “Will you be my Valentine? 💝”\nRender one clear primary button labeled exactly: “✅ YES 💕”. Do not render any NO button on this screen.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/screens/RealQuestionScreen.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-30"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-yes-celebration-flow-so-that-after-tapping-yes-it-a-triggers-confetti-burst-b-hearts-explosion-c-shows-a-teddy-hugging-a-heart-then-d-displays-the-requested-sweet-messages-one-by-one-in-order-each-message-visible-clearly-before-the-next-appears-1-you-are-absolutely-beautiful-2-i-m-so-grateful-to-have-you-in-my-life-3-every-moment-with-you-means-everything-to-me-4-thank-you-for-being-you-anya-then-show-the-final-line-exactly-happy-valentine-s-day-ni-m-really-lucky-to-be-with-you",
+      "featureTitle": "Update the YES celebration flow so that after tapping “✅ YES 💕” it (a) triggers confetti burst, (b) hearts explosion, (c) shows a teddy hugging a heart, then (d) displays the requested sweet messages one-by-one in order (each message visible clearly before the next appears):\n1) “You are absolutely beautiful 🌸”\n2) “I’m so grateful to have you in my life ❤️”\n3) “Every moment with you means everything to me”\n4) “Thank you for being you, Anya 🥰”\nThen show the final line exactly:\n“Happy Valentine’s Day 💕\\nI’m really lucky to be with you.”",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/ConfettiBurst.tsx",
-        "frontend/src/components/HeartsRain.tsx",
         "frontend/src/screens/YesCelebrationScreen.tsx"
       ],
       "components": [
@@ -135,16 +152,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-7"
+        "REQ-31"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-the-sweet-ending-screen-text-english-exactly-i-promise-this-app-is-the-only-thing-that-won-t-let-you-say-no-nthank-you-for-being-you-provide-a-clear-gentle-way-to-reach-it-after-the-yes-celebration-automatic-after-a-short-delay-or-via-a-continue-button",
-      "featureTitle": "Add the Sweet Ending screen text (English, exactly): “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.” Provide a clear, gentle way to reach it after the YES celebration (automatic after a short delay or via a “Continue” button).",
+      "featureId": "feature-add-the-optional-extra-cute-ending-screen-after-the-celebration-sequence-that-shows-a-teddy-holding-a-sign-with-the-exact-text-best-valentine-ever-and-a-single-button-labeled-exactly-replay-the-game",
+      "featureTitle": "Add the optional Extra-Cute Ending screen after the celebration sequence that shows a teddy holding a sign with the exact text: “Best Valentine Ever 🧸❤️” and a single button labeled exactly: “Replay the game 😄”.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/screens/SweetEndingScreen.tsx",
+        "frontend/src/screens/ExtraCuteEndingScreen.tsx",
         "frontend/src/screens/YesCelebrationScreen.tsx"
       ],
       "components": [
@@ -155,17 +171,19 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-8"
+        "REQ-32"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-apply-the-requested-visual-style-across-all-screens-a-cute-valentine-theme-using-pink-red-and-soft-purple-rounded-friendly-typography-gentle-animations-that-are-not-overwhelming-ensure-the-overall-tone-stays-playful-cute-and-not-pushy-or-uncomfortable-e-g-avoid-shaming-language-and-keep-all-microcopy-light",
-      "featureTitle": "Apply the requested visual style across all screens: a cute Valentine theme using pink, red, and soft purple; rounded, friendly typography; gentle animations that are not overwhelming. Ensure the overall tone stays playful/cute and not pushy or uncomfortable (e.g., avoid shaming language and keep all microcopy light).",
+      "featureId": "feature-apply-the-requested-mini-game-visual-style-adjustments-across-the-new-game-screens-pastel-colors-pink-peach-lavender-soft-bouncing-animations-cute-characters-teddy-hearts-flowers-and-mobile-first-one-hand-friendly-layout-big-tap-areas-no-zooming-required",
+      "featureTitle": "Apply the requested mini-game visual style adjustments across the new game screens: pastel colors (pink, peach, lavender), soft bouncing animations, cute characters (teddy, hearts, flowers), and mobile-first one-hand-friendly layout (big tap areas, no zooming required).",
       "files": [
         "frontend/src/components/ValentineScreenShell.tsx",
         "frontend/src/index.css",
-        "frontend/tailwind.config.js"
+        "frontend/src/screens/FinalLevelScreen.tsx",
+        "frontend/src/screens/Level1Screen.tsx",
+        "frontend/src/screens/RealQuestionScreen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -175,17 +193,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-9"
+        "REQ-33"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-optional-soft-romantic-background-music-with-an-on-screen-mute-unmute-control-that-defaults-to-muted-or-requires-an-explicit-user-action-to-start-playback-to-respect-browser-autoplay-policies",
-      "featureTitle": "Add optional soft romantic background music with an on-screen mute/unmute control that defaults to muted or requires an explicit user action to start playback (to respect browser autoplay policies).",
+      "featureId": "feature-incorporate-the-uploaded-images-into-the-app-as-static-assets-stored-under-frontend-public-assets-generated-or-an-equivalent-static-public-path-and-use-them-where-appropriate-for-teddy-valentine-game-visuals-ensuring-any-backgrounds-that-look-like-checkerboards-are-removed-or-avoided-so-assets-appear-clean-on-pastel-backgrounds",
+      "featureTitle": "Incorporate the uploaded images into the app as static assets (stored under frontend/public/assets/generated or an equivalent static public path) and use them where appropriate for teddy/valentine-game visuals, ensuring any backgrounds that look like checkerboards are removed or avoided so assets appear clean on pastel backgrounds.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/AudioToggle.tsx",
-        "frontend/src/hooks/useRomanticMusic.ts"
+        "frontend/src/screens/ExtraCuteEndingScreen.tsx",
+        "frontend/src/screens/Level1Screen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -195,26 +212,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-generated-static-visual-assets-and-render-them-in-the-ui-as-part-of-the-theme-served-from-frontend-public-assets-generated",
-      "featureTitle": "Add generated static visual assets and render them in the UI as part of the theme (served from frontend/public/assets/generated).",
-      "files": [
-        "frontend/src/components/HeartsRain.tsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
+        "REQ-34"
       ],
       "confidence": "high"
     }

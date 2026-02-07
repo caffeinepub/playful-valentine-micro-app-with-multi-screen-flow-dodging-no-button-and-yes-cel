@@ -1,38 +1,47 @@
 import { useState } from 'react';
 import IntroScreen from './screens/IntroScreen';
-import BuildUpScreen from './screens/BuildUpScreen';
-import BigQuestionScreen from './screens/BigQuestionScreen';
+import Level1Screen from './screens/Level1Screen';
+import FinalLevelScreen from './screens/FinalLevelScreen';
+import RealQuestionScreen from './screens/RealQuestionScreen';
 import YesCelebrationScreen from './screens/YesCelebrationScreen';
-import SweetEndingScreen from './screens/SweetEndingScreen';
+import ExtraCuteEndingScreen from './screens/ExtraCuteEndingScreen';
 import AudioToggle from './components/AudioToggle';
 
-type Screen = 'intro' | 'buildup' | 'question' | 'celebration' | 'ending';
+type Screen = 'intro' | 'level1' | 'finalLevel' | 'realQuestion' | 'celebration' | 'ending';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('intro');
 
+  const resetGame = () => {
+    setCurrentScreen('intro');
+  };
+
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="h-mobile-screen relative overflow-hidden">
       <AudioToggle />
       
       {currentScreen === 'intro' && (
-        <IntroScreen onContinue={() => setCurrentScreen('buildup')} />
+        <IntroScreen onStartGame={() => setCurrentScreen('level1')} />
       )}
       
-      {currentScreen === 'buildup' && (
-        <BuildUpScreen onReady={() => setCurrentScreen('question')} />
+      {currentScreen === 'level1' && (
+        <Level1Screen onComplete={() => setCurrentScreen('finalLevel')} />
       )}
       
-      {currentScreen === 'question' && (
-        <BigQuestionScreen onYes={() => setCurrentScreen('celebration')} />
+      {currentScreen === 'finalLevel' && (
+        <FinalLevelScreen onComplete={() => setCurrentScreen('realQuestion')} />
+      )}
+      
+      {currentScreen === 'realQuestion' && (
+        <RealQuestionScreen onYes={() => setCurrentScreen('celebration')} />
       )}
       
       {currentScreen === 'celebration' && (
-        <YesCelebrationScreen onContinue={() => setCurrentScreen('ending')} />
+        <YesCelebrationScreen onComplete={() => setCurrentScreen('ending')} />
       )}
       
       {currentScreen === 'ending' && (
-        <SweetEndingScreen />
+        <ExtraCuteEndingScreen onReplay={resetGame} />
       )}
     </div>
   );

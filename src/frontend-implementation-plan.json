@@ -1,289 +1,316 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Playful Valentine micro-app (4-screen flow with dodging NO + YES celebration)",
+  "title": "Find the NO Button mini-game flow (client-only) with levels, celebration, and replay",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Implement a 4-step single-page flow with gentle, button-driven transitions and no backend calls.",
+      "id": "REQ-24",
+      "summary": "Replace App.tsx screen flow with new mini-game progression and client-only state navigation including replay reset.",
       "acceptanceCriteria": [
-        "App starts on an Intro screen and progresses forward via user actions only (no page reloads required).",
-        "The flow includes Intro, Build-up, Big Question, and Sweet Ending screens; Sweet Ending is shown after the YES celebration (or via a clear continue action after YES).",
-        "All screen transitions are smooth and feel \"gentle\" (no harsh flashing or jarring motion)."
+        "App no longer shows the old Build-up/Big Question/Sweet Ending flow by default; it follows the new mini-game progression.",
+        "All navigation is driven by button taps and internal state; no actor calls or React Query calls are required.",
+        "Tapping “Replay the game 😄” resets the game state (attempt counts, timers, fake buttons visibility) and returns to the first screen."
       ],
       "file_operations": [
         {
           "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Create the single-page state-driven flow (Intro → Build-up → Big Question → Sweet Ending) with gentle transitions, ensuring navigation is only via button clicks and does not perform any backend calls."
-        },
-        {
-          "path": "frontend/src/components/ValentineScreenShell.tsx",
-          "operation": "create",
-          "description": "Create a shared screen layout wrapper (centered content, consistent spacing) and a simple transition container to keep screen changes gentle and visually consistent."
-        },
-        {
-          "path": "frontend/src/main.tsx",
           "operation": "modify",
-          "description": "Ensure the app renders the new App component cleanly and that providers do not interfere with the single-page, click-driven flow (no authentication prompts or backend calls triggered by the flow)."
+          "description": "Replace the current screen state machine with the required screens: Game Intro -> Level 1 -> Final Level -> Real Question -> YES Celebration -> Extra-Cute Ending (with Replay). Keep AudioToggle global, keep transitions purely client-side, and implement a single game-state reset function invoked by Replay to reset per-level counters/timers/visibility."
+        },
+        {
+          "path": "frontend/src/screens/Level1Screen.tsx",
+          "operation": "create",
+          "description": "Add the Level 1 screen component for the mini-game flow; exported component should accept callbacks (e.g., onComplete) and any state setters needed from App to keep navigation client-only."
+        },
+        {
+          "path": "frontend/src/screens/FinalLevelScreen.tsx",
+          "operation": "create",
+          "description": "Add the Final Level screen component; exported component should accept an onComplete callback to advance to the Real Question screen using App state only."
+        },
+        {
+          "path": "frontend/src/screens/RealQuestionScreen.tsx",
+          "operation": "create",
+          "description": "Add the Real Question screen component; exported component should accept an onYes callback to advance to the celebration sequence using App state only."
+        },
+        {
+          "path": "frontend/src/screens/ExtraCuteEndingScreen.tsx",
+          "operation": "create",
+          "description": "Add the optional Extra-Cute Ending screen with Replay action; exported component should accept onReplay callback that calls the App reset function to restart from Game Intro (or Level 1)."
         }
       ]
     },
     {
-      "id": "REQ-2",
-      "summary": "Create the Intro screen with exact specified text and a “Continue” button advancing to Build-up.",
+      "id": "REQ-25",
+      "summary": "Update Intro screen copy and CTA to start the game with mobile-first centered layout and bottom thumb-friendly CTA area.",
       "acceptanceCriteria": [
-        "Intro screen displays the specified text exactly (including emoji) and a “Continue” button.",
-        "Clicking “Continue” moves to the Build-up screen."
+        "Intro screen displays the exact two text blocks and the exact “🎮 Start Game” button label.",
+        "Tapping “🎮 Start Game” advances to Level 1.",
+        "CTA remains large (>=56px height) and positioned in a bottom area suitable for one-handed use."
       ],
       "file_operations": [
         {
           "path": "frontend/src/screens/IntroScreen.tsx",
-          "operation": "create",
-          "description": "Create the Intro screen UI with the exact text “Hi Anya 💕\\nI made a tiny app just to ask you something…” and a single primary “Continue” button that advances the flow."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire IntroScreen into the flow as the initial screen and connect the “Continue” action to navigate to the Build-up screen."
+          "description": "Replace intro copy with the exact text blocks: “Hi Anya 💕\\nWelcome to a tiny game I made just for you.” and “Your mission: find the NO button 😌”. Update primary button label to exactly “🎮 Start Game” and ensure it calls the Level 1 navigation callback. Use the existing shadcn-ui Button component for the CTA (Verify the component's usage instructions before implementing)."
         }
       ]
     },
     {
-      "id": "REQ-3",
-      "summary": "Create the Build-up screen with exact specified text and an “I’m ready” button advancing to Big Question.",
+      "id": "REQ-26",
+      "summary": "Implement Level 1 UI with exact header and lightweight animated distractions (hearts, walking teddy, popping flowers).",
       "acceptanceCriteria": [
-        "Build-up screen displays the specified text exactly (including emoji) and an “I’m ready” button.",
-        "Clicking “I’m ready” moves to the Big Question screen."
+        "Level 1 shows the exact header text at the top.",
+        "Hearts/teddy/flowers distraction animations are visible and do not block the primary interaction area.",
+        "Animations remain smooth on mobile and do not cause layout shift/jank."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/screens/BuildUpScreen.tsx",
-          "operation": "create",
-          "description": "Create the Build-up screen UI with the exact text “This is a very serious question.\\nPlease answer honestly 😌” and a single primary “I’m ready” button that advances the flow."
+          "path": "frontend/src/screens/Level1Screen.tsx",
+          "operation": "modify",
+          "description": "Implement the Level 1 layout with top header text exactly “Level 1: Find the NO button ❌”. Add a dedicated interaction region (for the hidden NO mechanic) and render distraction layers that do not occlude the interaction region’s tap handling."
         },
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire BuildUpScreen into the flow and connect “I’m ready” to navigate to the Big Question screen."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Create the Big Question screen with prominent centered question text, YES/NO buttons, and subtle helper text.",
-      "acceptanceCriteria": [
-        "Big Question screen shows the question text centered and visually prominent.",
-        "Buttons render with labels exactly: “YES 💕” and “NO”.",
-        "The helper line appears under the buttons and is visually subtle compared to the main question."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/screens/BigQuestionScreen.tsx",
+          "path": "frontend/src/components/Level1Distractions.tsx",
           "operation": "create",
-          "description": "Create the Big Question screen UI with big, bold centered text “Anya, will you be my Valentine? 💝”, two buttons labeled exactly “YES 💕” and “NO”, and subtle helper text “(Just kidding… but I really hope you say yes 🥺)”."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire BigQuestionScreen into the flow and connect YES/NO interactions to the appropriate in-app behaviors (YES triggers celebration sequence; NO triggers dodge behavior handled within the screen)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Implement the NO button dodge interaction within bounded area without shifting layout; YES remains stationary.",
-      "acceptanceCriteria": [
-        "Attempting to interact with NO (pointerenter/mouseover on desktop, pointerdown/touchstart on mobile, and/or click) causes NO to move away instead of being clicked.",
-        "NO’s new position always remains fully visible (not off-screen) and stays within a defined container/bounds.",
-        "YES remains fixed in place during NO dodging interactions.",
-        "NO behavior does not cause layout shifts that move the question text or YES button."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useDodgingNoButton.ts",
-          "operation": "create",
-          "description": "Create a hook that computes safe randomized positions for the NO button inside a bounded container and exposes handlers for pointerenter and pointerdown/touchstart to trigger evasion without causing layout shifts."
-        },
-        {
-          "path": "frontend/src/screens/BigQuestionScreen.tsx",
-          "operation": "modify",
-          "description": "Integrate dodging behavior: render NO as absolutely positioned within a fixed-size/relative bounds container; bind pointer interactions to move it, keeping the YES button in a stable, non-moving position."
+          "description": "Create a mobile-optimized distraction layer for Level 1: floating hearts, a teddy walking back-and-forth, and flowers popping in/out. Use static image assets (including generated flower and teddy assets) and lightweight CSS animations with capped element counts to avoid jank."
         },
         {
           "path": "frontend/src/index.css",
-          "operation": "create",
-          "description": "Add minimal CSS to support stable layout (fixed button row sizing), smooth NO movement transitions (gentle transform/translate), and prevent jarring motion while preserving readability."
+          "operation": "modify",
+          "description": "Add/adjust utility classes and keyframe animations needed for Level 1 distractions (float, walk, pop) ensuring minimal layout shift (prefer transform/opacity). Keep animations lightweight and mobile-friendly."
         }
       ]
     },
     {
-      "id": "REQ-6",
-      "summary": "Show brief, playful randomized feedback messages near the buttons after each NO dodge with auto-fade.",
+      "id": "REQ-27",
+      "summary": "Implement Level 1 hidden NO button that flashes briefly, relocates, can be partially occluded by distractions, and triggers haptics when it escapes including tap-on-last-known-area behavior.",
       "acceptanceCriteria": [
-        "After each NO dodge, one message from the list appears and then disappears automatically.",
-        "Messages rotate randomly or pseudo-randomly and do not always repeat the same one.",
-        "Message styling matches the app’s cute/playful tone and does not appear aggressive or guilt-inducing."
+        "The real NO button is only visible briefly (~0.5s) per appearance and is otherwise hidden.",
+        "The NO button relocates to new positions over time and/or after user interactions.",
+        "At least one of the hiding modes visually places the NO button partially behind a teddy/flower/chocolate asset (layering/occlusion).",
+        "Tapping the NO button’s last-known area causes it to relocate/hide again (even if the button is not currently visible).",
+        "On supported devices, a short vibration occurs when the NO button ‘escapes’."
       ],
       "file_operations": [
+        {
+          "path": "frontend/src/hooks/useHiddenNoButton.ts",
+          "operation": "create",
+          "description": "Add a client-only hook to control the Level 1 NO button lifecycle: timed brief visibility (~0.5s), periodic relocation, and escape behavior on tap. Track last-known position/area and expose an interaction handler that can be triggered by taps on the gameplay region even when the button is hidden. Include optional vibration behavior using the browser Vibration API when available."
+        },
+        {
+          "path": "frontend/src/screens/Level1Screen.tsx",
+          "operation": "modify",
+          "description": "Wire useHiddenNoButton into Level 1: render the real NO button only during the visible window; position it within a bounded gameplay region; add a full-region tap handler that checks taps against last-known NO position/area to trigger an immediate escape/relocation and a light vibration."
+        },
+        {
+          "path": "frontend/src/components/Level1Occluders.tsx",
+          "operation": "create",
+          "description": "Create occluder elements (teddy/flower/chocolate) that can be positioned so the NO button can appear partially behind them (layering via z-index). Use the generated transparent assets (flower-sticker.dim_256x256.png, chocolate-sticker.dim_256x256.png, teddy-love-transparent*.dim_512x512.png) for clean occlusion visuals."
+        }
+      ]
+    },
+    {
+      "id": "REQ-28",
+      "summary": "Add Level 1 random funny miss/escape pop-up messages plus a deterministic progress line after a fixed miss threshold.",
+      "acceptanceCriteria": [
+        "After each escape/miss event, one of the four funny pop-ups appears and auto-hides.",
+        "Pop-up messages match the exact spelling/punctuation/emoji provided.",
+        "After the configured number of tries, the progress line “Hmm… this is harder than it looks 🤔” appears at least once."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/screens/Level1Screen.tsx",
+          "operation": "modify",
+          "description": "Track miss/escape attempts and show a temporary toast after each escape using exactly one of: “Nope 😜”, “Missed it!”, “It ran away!”, “Try again 😂”. After a consistent threshold (e.g., 4 misses), also render the exact progress line “Hmm… this is harder than it looks 🤔” at least once."
+        },
         {
           "path": "frontend/src/components/DodgeMessageToast.tsx",
-          "operation": "create",
-          "description": "Create a small message component to display one randomized message at a time near the buttons, with an auto-fade/auto-hide animation."
-        },
-        {
-          "path": "frontend/src/screens/BigQuestionScreen.tsx",
           "operation": "modify",
-          "description": "After each NO dodge, randomly select and show exactly one of: “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”, then auto-hide it."
+          "description": "Generalize styling/positioning if needed so the toast can be reused on Level 1 without overlapping the main gameplay region; keep it lightweight and auto-hiding. Ensure it can display the exact provided strings without modification."
+        }
+      ]
+    },
+    {
+      "id": "REQ-29",
+      "summary": "Implement Final Level with exact header and fake buttons that vanish when tapped, then advance to Real Question.",
+      "acceptanceCriteria": [
+        "Final Level displays the exact header text.",
+        "At least three fake buttons appear with the exact labels and are tappable.",
+        "Tapping a fake button removes it from view (vanishes) with a lightweight animation.",
+        "After the fake buttons are gone (or after a short, deterministic sequence), the app transitions to the Real Question screen."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/screens/FinalLevelScreen.tsx",
+          "operation": "modify",
+          "description": "Implement Final Level with header text exactly “Final Level: Last chance 😏” and render fake tappable buttons labeled exactly “NO?”, “Not this one”, “Almost!”. On tap, each button vanishes with a lightweight animation and is removed from view; after all are gone, call onComplete to transition to Real Question. Use the existing shadcn-ui Button component for consistent tap targets (Verify the component's usage instructions before implementing)."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add gentle fade-in/fade-out styling/animation for the dodge feedback messages to keep tone cute and motion non-overwhelming."
+          "description": "Add a lightweight vanish animation class for fake buttons (transform/opacity only) to avoid layout jank and keep mobile performance smooth."
         }
       ]
     },
     {
-      "id": "REQ-7",
-      "summary": "On YES click: confetti burst, hearts rain, vibration (if supported), then show exact success + follow-up text and remove NO interaction.",
+      "id": "REQ-30",
+      "summary": "Implement Real Question screen with calmer pacing and AudioToggle intact; show exact two-line text and a single YES button only.",
       "acceptanceCriteria": [
-        "Clicking YES triggers a visible confetti effect and a visible hearts-rain effect.",
-        "On supported devices, a vibration occurs; on unsupported devices, the app continues without errors.",
-        "After the celebration begins, the success message and follow-up text are shown exactly as specified.",
-        "After YES is clicked, the NO button is no longer relevant (either hidden/disabled or the screen content changes so it can’t be interacted with)."
+        "Real Question screen shows exactly the two lines of text and a single “✅ YES 💕” button.",
+        "No NO button is present in the DOM or visually on this screen.",
+        "Animations on this screen feel noticeably calmer/slower than Level 1/Final Level (e.g., longer fade durations).",
+        "AudioToggle remains available and continues to respect autoplay policies (music plays only after explicit user action)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ConfettiBurst.tsx",
-          "operation": "create",
-          "description": "Create a lightweight on-screen confetti burst effect (frontend-only) that can be triggered from the YES action."
+          "path": "frontend/src/screens/RealQuestionScreen.tsx",
+          "operation": "modify",
+          "description": "Render the Real Question screen with exactly: “Okay Anya… no more games.” and “Will you be my Valentine? 💝” and a single primary button labeled exactly “✅ YES 💕”. Do not render any NO button. Use calmer/slower animation cadence (longer fades) for this screen. Use the existing shadcn-ui Button component (Verify the component's usage instructions before implementing)."
         },
         {
-          "path": "frontend/src/components/HeartsRain.tsx",
-          "operation": "create",
-          "description": "Create a hearts-raining overlay animation (frontend-only) that runs after YES is clicked; use the generated heart sticker icon as a visual element where appropriate."
-        },
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add a slower fade/transition utility (e.g., longer duration easing) for the Real Question screen to clearly differentiate pacing from Level 1/Final Level."
+        }
+      ]
+    },
+    {
+      "id": "REQ-31",
+      "summary": "Update YES celebration to trigger confetti + hearts + teddy-hug visual and display sweet messages sequentially in exact order, then show final two-line message.",
+      "acceptanceCriteria": [
+        "Tapping “✅ YES 💕” triggers confetti + heart explosion style effects and a teddy-hugging-heart visual.",
+        "The four sweet messages appear sequentially in the exact order and text.",
+        "After the sequence, the final two-line message appears exactly as provided.",
+        "All celebration effects remain lightweight (no heavy video assets) and do not freeze on mobile."
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/screens/YesCelebrationScreen.tsx",
-          "operation": "create",
-          "description": "Create a celebration view that triggers confetti + hearts rain and shows the exact message “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text “Dinner / chocolate / cuddles are officially planned 😏”."
+          "operation": "modify",
+          "description": "Refactor the celebration screen to: (a) trigger ConfettiBurst, (b) trigger a hearts explosion effect (reuse OutwardHeartBurst and/or YesHeartsBurst), (c) show a teddy hugging a heart (reuse TeddyHugJump), then (d) display the four sweet messages sequentially in order with clear timing: “You are absolutely beautiful 🌸”, “I’m so grateful to have you in my life ❤️”, “Every moment with you means everything to me”, “Thank you for being you, Anya 🥰”, then show final line exactly “Happy Valentine’s Day 💕\\nI’m really lucky to be with you.” Keep effects capped/lightweight and remove any old copy that doesn’t match. Use existing components ConfettiBurst/OutwardHeartBurst/TeddyHugJump for lightweight effects."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire YES to transition into the celebration view, call the browser vibration API safely (feature-detected), and ensure NO is hidden/disabled by switching screen content so NO can’t be interacted with after YES."
+          "description": "Adjust navigation so that after the celebration sequence completes, the app proceeds to the Extra-Cute Ending screen (instead of the prior SweetEnding flow)."
         }
       ]
     },
     {
-      "id": "REQ-8",
-      "summary": "Add Sweet Ending screen with exact text and a clear path to reach it after YES celebration (delay or Continue).",
+      "id": "REQ-32",
+      "summary": "Add Extra-Cute Ending screen with teddy sign text and Replay action restarting the mini-game flow.",
       "acceptanceCriteria": [
-        "Sweet Ending screen displays the specified text exactly (including emoji).",
-        "User can reliably reach the Sweet Ending after clicking YES (either automatically after the celebration or via an explicit button)."
+        "After the celebration message sequence completes, the app navigates to the Extra-Cute Ending screen.",
+        "The ending screen includes a teddy + sign visual and the exact sign text.",
+        "The “Replay the game 😄” button is present and restarts the game flow per REQ-24."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/screens/SweetEndingScreen.tsx",
-          "operation": "create",
-          "description": "Create the Sweet Ending screen UI with the exact text “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.”"
+          "path": "frontend/src/screens/ExtraCuteEndingScreen.tsx",
+          "operation": "modify",
+          "description": "Implement the ending screen showing a teddy holding a sign using the generated asset frontend/public/assets/generated/teddy-sign.dim_768x768.png and render the exact sign text “Best Valentine Ever 🧸❤️”. Add a single button labeled exactly “Replay the game 😄” that calls the App-level replay/reset handler. Use the existing shadcn-ui Button component (Verify the component's usage instructions before implementing)."
         },
         {
           "path": "frontend/src/screens/YesCelebrationScreen.tsx",
           "operation": "modify",
-          "description": "Add a gentle, clear path to Sweet Ending after the celebration (either an automatic timed transition after a short delay and/or a visible “Continue” action)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire SweetEndingScreen into the flow and ensure it is reachable after the YES celebration via the chosen continue mechanism."
+          "description": "Replace any prior 'Continue' button gating with a deterministic completion callback after the final message so navigation to Extra-Cute Ending happens automatically when the sequence finishes."
         }
       ]
     },
     {
-      "id": "REQ-9",
-      "summary": "Apply consistent cute Valentine visual theme (pink/red/soft purple), rounded typography, and gentle animations without pushy tone.",
+      "id": "REQ-33",
+      "summary": "Apply mini-game pastel/cute style across new screens with mobile-first big tap areas and soft bouncing animations.",
       "acceptanceCriteria": [
-        "All screens share a consistent palette (pink/red/soft purple) and rounded, friendly typography.",
-        "Animations (screen transitions, message fades, button motions) are smooth and not overly fast or intense.",
-        "Copy and interactions feel playful rather than coercive; no additional text beyond what’s specified is added that increases pressure."
+        "New screens use a coherent pastel palette emphasizing pink/peach/lavender.",
+        "Tap targets for interactive elements meet mobile usability (>=44px, preferably >=56px for primary CTAs).",
+        "Layouts fit within viewport height on common mobile sizes without requiring pinch-zoom."
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Define global theme tokens and base styles for a Valentine palette (pink/red/soft purple), rounded friendly typography, and gentle animation timings; ensure no additional pushy microcopy is introduced via styling elements."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend Tailwind theme (colors/radius/animations) to support the Valentine palette and softer rounded visuals consistently across screens."
+          "description": "Tune/add pastel background styles and animation utilities (soft bounce, gentle pulse) for the mini-game screens while keeping performance constraints. Ensure global tap target utilities/classes support >=44px and primary CTAs remain >=56px."
         },
         {
           "path": "frontend/src/components/ValentineScreenShell.tsx",
           "operation": "modify",
-          "description": "Ensure consistent spacing, readable contrast over backgrounds, and gentle transition behaviors across all screens using the shared layout wrapper."
+          "description": "Extend the screen shell to support a mini-game background variant (e.g., optional prop) so the new game screens can use the pastel game background asset frontend/public/assets/generated/game-bg.dim_1080x1920.png without creating new routes. Keep layouts mobile-first and one-hand-friendly (bottom CTA area where needed)."
+        },
+        {
+          "path": "frontend/src/screens/Level1Screen.tsx",
+          "operation": "modify",
+          "description": "Ensure Level 1 interactive region and any tappable controls respect mobile tap target sizing and fit within viewport without zoom; apply pastel styling and soft bouncing micro-animations."
+        },
+        {
+          "path": "frontend/src/screens/FinalLevelScreen.tsx",
+          "operation": "modify",
+          "description": "Ensure fake buttons have large tap targets and fit within viewport; apply pastel styling and subtle bounce/vanish motion while keeping animations lightweight."
+        },
+        {
+          "path": "frontend/src/screens/RealQuestionScreen.tsx",
+          "operation": "modify",
+          "description": "Apply calmer pastel styling and slower transitions while keeping the single YES CTA large and thumb-friendly."
         }
       ]
     },
     {
-      "id": "REQ-10",
-      "summary": "Add optional soft romantic background music with visible mute/unmute control; default muted or requires user action; does not reset screen state.",
+      "id": "REQ-34",
+      "summary": "Add and use generated/static image assets for the mini-game visuals and ensure no checkerboard backgrounds appear in the UI.",
       "acceptanceCriteria": [
-        "A mute/unmute (or play/pause) control is visible and works.",
-        "Music does not autoplay with sound without a user gesture; initial state is muted or not playing until user interacts.",
-        "Toggling audio does not reset the current screen state."
+        "At least one uploaded teddy/heart illustration is visible in the UI on one or more game screens.",
+        "Assets used in-game do not show a checkerboard background; they render cleanly on the app background.",
+        "Static assets are served from the frontend (no backend image serving)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useRomanticMusic.ts",
+          "path": "frontend/public/assets/generated/game-bg.dim_1080x1920.png",
           "operation": "create",
-          "description": "Implement a small audio controller hook (using HTMLAudioElement or Web Audio) that starts only after explicit user interaction, defaults to muted/not playing, and exposes toggle controls without affecting the app’s screen state."
+          "description": "Add the required generated pastel game background pattern asset as a static public file."
         },
         {
-          "path": "frontend/src/components/AudioToggle.tsx",
+          "path": "frontend/public/assets/generated/teddy-sign.dim_768x768.png",
           "operation": "create",
-          "description": "Create a small on-screen mute/unmute (or play/pause) control UI that connects to the romantic music hook and stays visible across screens."
+          "description": "Add the required generated teddy holding a rectangular sign asset as a static public file."
         },
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/public/assets/generated/chocolate-sticker.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated chocolate sticker icon with transparent background as a static public file."
+        },
+        {
+          "path": "frontend/public/assets/generated/flower-sticker.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the required generated flower sticker icon with transparent background as a static public file."
+        },
+        {
+          "path": "frontend/public/assets/generated/teddy-love-transparent.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the edited transparent PNG asset derived from pngtree-love-heart-animal-illustration-png-image_2617736.jpg (checkerboard/background removed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/teddy-love-transparent-2.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the edited transparent PNG asset derived from pngtree-love-heart-animal-illustration-png-image_2617736-1.jpg (checkerboard/background removed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/teddy-love-transparent-3.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the edited transparent PNG asset derived from pngtree-love-heart-animal-illustration-png-image_2617736-2.jpg (checkerboard/background removed)."
+        },
+        {
+          "path": "frontend/public/assets/generated/teddy-love-transparent-4.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the edited transparent PNG asset derived from pngtree-love-heart-animal-illustration-png-image_2617736-3.jpg (checkerboard/background removed)."
+        },
+        {
+          "path": "frontend/src/screens/Level1Screen.tsx",
           "operation": "modify",
-          "description": "Render the AudioToggle persistently within the app shell so audio can be toggled at any time without changing the current screen, and ensure playback only starts after a user gesture."
-        }
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "summary": "Add generated static visual assets under frontend/public/assets/generated and visibly use at least one background/pattern in the UI theme.",
-      "acceptanceCriteria": [
-        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
-        "At least one generated background/pattern asset is visibly used in the app styling (without harming readability)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/valentine-pattern.dim_1600x900.png",
-          "operation": "create",
-          "description": "Add the generated image asset file at frontend/public/assets/generated/valentine-pattern.dim_1600x900.png."
+          "description": "Use the new static assets in Level 1 where appropriate: apply frontend/public/assets/generated/game-bg.dim_1080x1920.png as the screen background variant, and use frontend/public/assets/generated/flower-sticker.dim_256x256.png and frontend/public/assets/generated/chocolate-sticker.dim_256x256.png (plus a teddy-love-transparent*.dim_512x512.png) for distraction/occlusion visuals. Ensure no checkerboard background assets are rendered."
         },
         {
-          "path": "frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png",
-          "operation": "create",
-          "description": "Add the generated image asset file at frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png."
-        },
-        {
-          "path": "frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png",
-          "operation": "create",
-          "description": "Add the generated image asset file at frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png."
-        },
-        {
-          "path": "frontend/src/index.css",
+          "path": "frontend/src/screens/ExtraCuteEndingScreen.tsx",
           "operation": "modify",
-          "description": "Wire the generated backgrounds into the app styling by applying at least one of the generated background assets (frontend/public/assets/generated/valentine-pattern.dim_1600x900.png and/or frontend/public/assets/generated/valentine-gradient-bg.dim_1600x900.png) in a way that preserves text readability."
-        },
-        {
-          "path": "frontend/src/components/HeartsRain.tsx",
-          "operation": "modify",
-          "description": "Use the generated heart icon asset (frontend/public/assets/generated/heart-sticker-icon.dim_256x256.png) as a themed element in the hearts rain animation and/or subtle decorative UI."
+          "description": "Use frontend/public/assets/generated/teddy-sign.dim_768x768.png for the ending visual and ensure it appears cleanly on the pastel background (no checkerboard)."
         }
       ]
     }

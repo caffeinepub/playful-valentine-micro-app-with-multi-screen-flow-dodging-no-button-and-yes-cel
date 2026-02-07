@@ -1,11 +1,20 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "Build a playful Valentine’s Day “question” micro-app with a short multi-screen flow, cute theme, a dodging NO button gag, and celebratory YES outcome effects.",
-  "architectural_notes": [],
+  "projectStateVersion": 9,
+  "summary": "Pivot the Valentine micro-app into a playful, mobile-first mini-game concept (“Find the NO Button”) with a 4-screen level-based flow where NO appears briefly/disappears/hides behind cute elements, culminating in the real Valentine question with only a YES button, followed by celebratory effects and sequential heartfelt messages plus optional replay/extra ending.",
+  "architectural_notes": [
+    "Prioritize mobile performance: prefer CSS keyframes/SVG/Lottie over heavy video; keep particle counts controlled and animations lightweight (aim for smooth 60fps).",
+    "Mobile-first interaction: design for thumb taps (no hover reliance); use touchstart/pointerdown for NO-button dodge on mobile.",
+    "Mobile layout rules: full-screen sections; center content; large tap targets (>=44px height) and big text/buttons.",
+    "Ensure YES/NO buttons are spaced far enough apart; YES remains fixed and easy to tap; NO uses absolute positioning within a safe bounded area.",
+    "NO-button movement should be mobile-safe: random safe spots fully on-screen with a short playful transition (~0.2–0.3s), not glitchy.",
+    "Prefer responsive sizing using viewport units (vh/vw) over fixed px where appropriate for mobile consistency.",
+    "Mini-game timing/interaction needs to stay mobile-safe: brief NO visibility (~0.5s) and tap-driven repositioning must not create accidental scroll/zoom or layout shifts.",
+    "Support sequential message presentation (one-by-one) after YES with lightweight transitions; avoid blocking main thread to keep animations smooth."
+  ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Seamless cute heart pattern background in pink/red/soft-purple palette (valentine-pattern.dim_1600x900.png)\n- Soft gradient background with subtle bokeh/hearts in pink/red/soft-purple palette (valentine-gradient-bg.dim_1600x900.png)\n- Minimal rounded heart icon sticker style, soft purple/pink tones (heart-sticker-icon.dim_256x256.png)",
+  "imageRequirements": "## Required Images\n- Pastel game background pattern with soft clouds/hearts (game-bg.dim_1080x1920.png)\n- Teddy holding a rectangular sign (teddy-sign.dim_768x768.png)\n- Chocolate icon sticker with transparent background (chocolate-sticker.dim_256x256.png)\n- Flower sticker icon with transparent background (flower-sticker.dim_256x256.png)\n\n## Edit Images\n- Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736.jpg > teddy-love-transparent.dim_512x512.png)\n- Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736-1.jpg > teddy-love-transparent-2.dim_512x512.png)\n- Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736-2.jpg > teddy-love-transparent-3.dim_512x512.png)\n- Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736-3.jpg > teddy-love-transparent-4.dim_512x512.png)",
   "existing_features": [
     {
       "id": "feature-implement-a-4-step-single-page-valentine-micro-app-flow-with-clearly-separated-screens-1-intro-screen-2-build-up-screen-3-big-question-screen-4-sweet-ending-screen-navigation-must-be-driven-by-button-clicks-and-not-require-any-backend-calls",
@@ -94,12 +103,250 @@
         "REQ-11"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-persistent-lightweight-animated-decorative-elements-that-run-throughout-the-entire-app-all-screens-optimized-for-mobile-1-a-teddy-bear-anchored-at-the-bottom-that-loops-a-gentle-wave-hold-heart-motion-2-small-hearts-drifting-upward-continuously-3-flower-petals-drifting-diagonally-and-4-subtle-bouncing-chocolates-that-appear-near-call-to-action-areas-when-primary-buttons-are-shown",
+      "title": "Add persistent, lightweight animated decorative elements that run throughout the entire app (all screens), optimized for mobile: (1) a teddy bear anchored at the bottom that loops a gentle wave/hold-heart motion, (2) small hearts drifting upward continuously, (3) flower petals drifting diagonally, and (4) subtle bouncing chocolates that appear near call-to-action areas when primary buttons are shown.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-screen-1-welcome-intro-to-match-the-new-requested-user-facing-text-and-motion-show-hi-anya-ni-made-something-just-for-you-and-animate-the-teddy-sliding-in-from-the-bottom-flowers-blooming-in-sequence-and-the-continue-button-pulsing-softly",
+      "title": "Update Screen 1 (Welcome/Intro) to match the new requested user-facing text and motion: show “Hi Anya 💕\\nI made something just for you…” and animate the teddy sliding in from the bottom, flowers blooming in sequence, and the Continue button pulsing softly.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-screen-2-build-up-to-match-the-new-requested-user-facing-text-and-motion-show-the-text-exactly-this-is-a-very-serious-question-animate-the-teddy-hugging-a-heart-add-subtle-sparkles-around-the-text-make-chocolates-pop-in-with-a-tiny-bounce-and-apply-a-gentle-wiggle-animation-to-the-i-m-ready-button",
+      "title": "Update Screen 2 (Build-Up) to match the new requested user-facing text and motion: show the text exactly “This is a very serious question 😌”, animate the teddy hugging a heart, add subtle sparkles around the text, make chocolates pop in with a tiny bounce, and apply a gentle wiggle animation to the “I’m ready” button.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-screen-3-big-question-visuals-and-interactions-keep-the-existing-main-question-text-and-two-button-layout-add-a-teddy-that-points-toward-the-yes-button-apply-a-soft-glow-to-the-yes-button-and-spawn-tiny-hearts-near-the-yes-button-on-hover-tap-add-a-teddy-peeking-visual-near-behind-the-no-button",
+      "title": "Enhance Screen 3 (Big Question) visuals and interactions: keep the existing main question text and two-button layout, add a teddy that points toward the YES button, apply a soft glow to the YES button, and spawn tiny hearts near the YES button on hover/tap. Add a “teddy peeking” visual near/behind the NO button.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-extend-the-no-button-dodge-behavior-to-include-1-additional-random-feedback-lines-exactly-too-slow-almost-nope-nope-nope-2-a-small-accompanying-micro-animation-per-dodge-attempt-e-g-teddy-covers-its-eyes-and-or-a-small-heart-bubble-that-reads-oops-3-each-dodge-triggers-a-quick-flower-pop-up-and-a-brief-chocolate-shake-and-4-the-no-button-must-always-remain-fully-visible-within-its-allowed-movement-region-on-all-screen-sizes",
+      "title": "Extend the NO-button dodge behavior to include: (1) additional random feedback lines exactly: “Too slow 😜”, “Almost!”, “Nope nope nope”, (2) a small accompanying micro-animation per dodge attempt (e.g., teddy covers its eyes and/or a small heart bubble that reads “oops!”), (3) each dodge triggers a quick flower pop-up and a brief chocolate shake, and (4) the NO button must always remain fully visible within its allowed movement region on all screen sizes.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-expand-the-yes-celebration-screen-effects-to-include-additional-lightweight-animations-layered-with-the-existing-confetti-hearts-vibration-1-teddy-jumps-and-hugs-a-big-heart-2-flower-shower-falling-from-the-top-3-light-chocolate-rain-and-4-an-outward-heart-burst-effect-keep-the-existing-success-message-text-unchanged",
+      "title": "Expand the YES celebration screen effects to include additional lightweight animations layered with the existing confetti/hearts/vibration: (1) teddy jumps and hugs a big heart, (2) flower shower falling from the top, (3) light chocolate rain, and (4) an outward heart ‘burst’ effect. Keep the existing success message text unchanged.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-additional-final-postscript-message-after-the-ending-flow-display-the-text-exactly-p-s-i-smile-every-time-i-think-of-you-on-the-sweet-ending-screen-as-an-extra-line-beneath-the-existing-ending-message",
+      "title": "Add an additional final postscript message after the ending flow: display the text exactly “P.S. I smile every time I think of you 🧸❤️” on the Sweet Ending screen as an extra line beneath the existing ending message.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-new-animations-and-effects-are-implemented-in-a-mobile-optimized-lightweight-way-prefer-css-keyframes-svg-png-based-elements-cap-particle-counts-avoid-heavy-video-like-assets-and-keep-the-ui-responsive-on-small-screens",
+      "title": "Ensure all new animations and effects are implemented in a mobile-optimized, lightweight way (prefer CSS keyframes/SVG/PNG-based elements; cap particle counts; avoid heavy video-like assets) and keep the UI responsive on small screens.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-layout-of-all-screens-to-be-mobile-first-each-screen-must-render-as-a-full-screen-section-sized-to-the-viewport-height-with-content-centered-and-primary-actions-placed-in-a-thumb-friendly-bottom-area-especially-on-the-welcome-and-ready-screens",
+      "title": "Update the layout of all screens to be mobile-first: each screen must render as a full-screen section sized to the viewport height, with content centered and primary actions placed in a thumb-friendly bottom area (especially on the Welcome and Ready screens).",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-big-question-screen-button-layout-explicitly-mobile-friendly-keep-yes-easy-to-tap-and-stationary-space-yes-and-no-far-enough-apart-to-prevent-accidental-taps-and-ensure-the-no-button-uses-absolute-positioning-within-a-dedicated-movement-region",
+      "title": "Make the Big Question screen button layout explicitly mobile-friendly: keep \"YES 💕\" easy to tap and stationary, space \"YES 💕\" and \"NO\" far enough apart to prevent accidental taps, and ensure the \"NO\" button uses absolute positioning within a dedicated movement region.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-adjust-the-no-button-dodge-interaction-to-be-touch-first-do-not-rely-on-hover-for-the-core-dodge-behavior-the-no-button-must-dodge-immediately-on-touchstart-pointerdown-on-mobile-with-a-playful-but-smooth-animation-0-2-0-3s-and-it-must-always-remain-fully-visible-within-the-movement-region-on-all-screen-sizes",
+      "title": "Adjust the NO-button dodge interaction to be touch-first: do not rely on hover for the core dodge behavior. The NO button must dodge immediately on touchstart/pointerdown on mobile, with a playful but smooth animation (0.2–0.3s), and it must always remain fully visible within the movement region on all screen sizes.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optional-enhancement-add-a-proximity-based-dodge-trigger-on-mobile-so-the-no-button-can-dodge-when-the-user-s-finger-gets-close-without-requiring-a-direct-press-while-keeping-the-experience-lightweight-and-not-interfering-with-scrolling-or-other-taps",
+      "title": "(Optional enhancement) Add a proximity-based dodge trigger on mobile so the NO button can dodge when the user’s finger gets close (without requiring a direct press), while keeping the experience lightweight and not interfering with scrolling or other taps.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-screen-flow-in-frontend-src-app-tsx-with-the-new-mini-game-flow-screens-and-navigation-using-only-client-side-state-transitions-no-backend-calls-1-game-intro-2-level-1-3-final-level-4-real-question-5-yes-celebration-6-optional-extra-cute-ending-with-replay-the-replay-action-must-restart-the-game-from-game-intro-or-level-1-and-reset-any-per-level-counters-timers-messages",
+      "title": "Replace the current screen flow in frontend/src/App.tsx with the new mini-game flow screens and navigation, using only client-side state transitions (no backend calls): (1) Game Intro, (2) Level 1, (3) Final Level, (4) Real Question, (5) YES Celebration, (6) Optional Extra-Cute Ending with Replay. The Replay action must restart the game from Game Intro (or Level 1) and reset any per-level counters/timers/messages.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-existing-intro-screen-ui-to-match-the-new-game-intro-screen-copy-and-primary-action-user-facing-text-must-be-exactly-hi-anya-nwelcome-to-a-tiny-game-i-made-just-for-you-your-mission-find-the-no-button-primary-button-label-must-be-exactly-start-game-keep-the-screen-mobile-first-centered-with-a-thumb-friendly-bottom-cta-area",
+      "title": "Update the existing Intro screen UI to match the new Game Intro screen copy and primary action. User-facing text must be exactly:\n- “Hi Anya 💕\\nWelcome to a tiny game I made just for you.”\n- “Your mission: find the NO button 😌”\nPrimary button label must be exactly: “🎮 Start Game”. Keep the screen mobile-first, centered, with a thumb-friendly bottom CTA area.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-level-1-screen-the-game-begins-with-the-following-exact-user-facing-header-text-at-the-top-level-1-find-the-no-button-the-screen-must-include-animated-distractions-hearts-floating-around-a-teddy-walking-back-and-forth-and-flowers-popping-in-and-out-ensure-animations-are-lightweight-and-mobile-optimized",
+      "title": "Implement Level 1 screen (“The Game Begins”) with the following exact user-facing header text at the top: “Level 1: Find the NO button ❌”. The screen must include animated distractions: hearts floating around, a teddy walking back and forth, and flowers popping in and out. Ensure animations are lightweight and mobile-optimized.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-level-1-hidden-no-button-mechanic-a-real-no-button-appears-for-approximately-0-5-seconds-then-disappears-and-repeatedly-relocates-to-new-positions-the-no-button-must-sometimes-appear-visually-behind-partially-occluded-by-one-of-the-distraction-elements-a-teddy-a-flower-or-a-chocolate-when-the-user-taps-the-area-where-the-no-button-last-appeared-the-no-button-must-immediately-move-hide-again-and-trigger-a-light-vibration-using-the-browser-vibration-api-when-available",
+      "title": "Implement the Level 1 “hidden NO button” mechanic: a real NO button appears for approximately 0.5 seconds, then disappears, and repeatedly relocates to new positions. The NO button must sometimes appear visually ‘behind’ (partially occluded by) one of the distraction elements: a teddy, a flower, or a chocolate. When the user taps the area where the NO button last appeared, the NO button must immediately move/hide again and trigger a light vibration (using the browser Vibration API when available).",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-level-1-funny-pop-up-feedback-messages-that-appear-briefly-after-each-miss-escape-randomly-select-and-display-one-of-the-following-exact-messages-nope-missed-it-it-ran-away-try-again-after-a-few-tries-define-a-consistent-threshold-e-g-4-misses-also-show-the-exact-progress-line-hmm-this-is-harder-than-it-looks",
+      "title": "Add Level 1 funny pop-up feedback messages that appear briefly after each miss/escape. Randomly select and display one of the following exact messages: “Nope 😜”, “Missed it!”, “It ran away!”, “Try again 😂”. After a few tries (define a consistent threshold, e.g., 4 misses), also show the exact progress line: “Hmm… this is harder than it looks 🤔”.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-final-level-screen-with-the-exact-user-facing-text-final-level-last-chance-the-screen-must-show-multiple-fake-tappable-buttons-with-the-exact-labels-no-not-this-one-almost-each-fake-button-must-vanish-when-tapped-after-the-fake-buttons-sequence-the-screen-must-clear-and-advance-to-the-real-question-screen",
+      "title": "Implement the Final Level screen with the exact user-facing text: “Final Level: Last chance 😏”. The screen must show multiple fake tappable buttons with the exact labels: “NO?”, “Not this one”, “Almost!”. Each fake button must vanish when tapped. After the fake buttons sequence, the screen must clear and advance to the Real Question screen.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-real-question-screen-with-slowed-down-pacing-feel-and-soft-music-behavior-keep-the-global-audiotoggle-but-on-this-screen-emphasize-the-soft-music-moment-by-presenting-the-content-in-a-calmer-animation-cadence-e-g-slower-fades-user-facing-text-must-be-exactly-two-lines-okay-anya-no-more-games-will-you-be-my-valentine-render-one-clear-primary-button-labeled-exactly-yes-do-not-render-any-no-button-on-this-screen",
+      "title": "Implement the Real Question screen with slowed-down pacing/feel and soft music behavior: keep the global AudioToggle, but on this screen emphasize the ‘soft music’ moment by presenting the content in a calmer animation cadence (e.g., slower fades). User-facing text must be exactly two lines:\n- “Okay Anya… no more games.”\n- “Will you be my Valentine? 💝”\nRender one clear primary button labeled exactly: “✅ YES 💕”. Do not render any NO button on this screen.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-yes-celebration-flow-so-that-after-tapping-yes-it-a-triggers-confetti-burst-b-hearts-explosion-c-shows-a-teddy-hugging-a-heart-then-d-displays-the-requested-sweet-messages-one-by-one-in-order-each-message-visible-clearly-before-the-next-appears-1-you-are-absolutely-beautiful-2-i-m-so-grateful-to-have-you-in-my-life-3-every-moment-with-you-means-everything-to-me-4-thank-you-for-being-you-anya-then-show-the-final-line-exactly-happy-valentine-s-day-ni-m-really-lucky-to-be-with-you",
+      "title": "Update the YES celebration flow so that after tapping “✅ YES 💕” it (a) triggers confetti burst, (b) hearts explosion, (c) shows a teddy hugging a heart, then (d) displays the requested sweet messages one-by-one in order (each message visible clearly before the next appears):\n1) “You are absolutely beautiful 🌸”\n2) “I’m so grateful to have you in my life ❤️”\n3) “Every moment with you means everything to me”\n4) “Thank you for being you, Anya 🥰”\nThen show the final line exactly:\n“Happy Valentine’s Day 💕\\nI’m really lucky to be with you.”",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-optional-extra-cute-ending-screen-after-the-celebration-sequence-that-shows-a-teddy-holding-a-sign-with-the-exact-text-best-valentine-ever-and-a-single-button-labeled-exactly-replay-the-game",
+      "title": "Add the optional Extra-Cute Ending screen after the celebration sequence that shows a teddy holding a sign with the exact text: “Best Valentine Ever 🧸❤️” and a single button labeled exactly: “Replay the game 😄”.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-the-requested-mini-game-visual-style-adjustments-across-the-new-game-screens-pastel-colors-pink-peach-lavender-soft-bouncing-animations-cute-characters-teddy-hearts-flowers-and-mobile-first-one-hand-friendly-layout-big-tap-areas-no-zooming-required",
+      "title": "Apply the requested mini-game visual style adjustments across the new game screens: pastel colors (pink, peach, lavender), soft bouncing animations, cute characters (teddy, hearts, flowers), and mobile-first one-hand-friendly layout (big tap areas, no zooming required).",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-incorporate-the-uploaded-images-into-the-app-as-static-assets-stored-under-frontend-public-assets-generated-or-an-equivalent-static-public-path-and-use-them-where-appropriate-for-teddy-valentine-game-visuals-ensuring-any-backgrounds-that-look-like-checkerboards-are-removed-or-avoided-so-assets-appear-clean-on-pastel-backgrounds",
+      "title": "Incorporate the uploaded images into the app as static assets (stored under frontend/public/assets/generated or an equivalent static public path) and use them where appropriate for teddy/valentine-game visuals, ensuring any backgrounds that look like checkerboards are removed or avoided so assets appear clean on pastel backgrounds.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
     {
       "id": "AR-1",
       "summary": "Create Valentine micro-app with intro/build-up/question screens, dodging NO button behavior with playful messages, and YES celebration (confetti/hearts/vibration) plus optional sweet ending and romantic styling/music.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add persistent animated elements across the app: teddy bear at bottom (wave/hold heart), small hearts drifting upward, flower petals drifting diagonally, and chocolates with subtle bounce when buttons appear; keep animations gentle and mobile-friendly.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Enhance per-screen animations: Screen 1 teddy slides in + flowers bloom; Screen 2 teddy hugs heart + sparkles + chocolates pop; Screen 3 teddy points toward YES + flowers pop on each NO dodge + chocolates shake when NO moves.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Update/extend NO-button dodge feedback to include additional random lines (e.g., “Too slow 😜”, “Almost!”, “Nope nope nope”) and trigger small accompanying animations (e.g., teddy covers eyes, heart says “oops!”) while ensuring the NO button stays fully visible on screen.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Expand the YES celebration to include additional cute effects beyond confetti/hearts (e.g., teddy jump/hug heart, flower shower, light chocolate rain, outward heart burst), while keeping performance lightweight.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add an optional final postscript message after the ending flow: “P.S. I smile every time I think of you 🧸❤️”.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement new 4-screen “Find the NO Button (If You Can)” mini-game flow: Screen 1 intro + Start Game; Screen 2 Level 1 with NO briefly appearing/disappearing and hiding behind teddy/flower/chocolate with funny pop-ups; Screen 3 Final Level with distractions and multiple fake NO-like buttons that vanish; Screen 4 real question with only YES button and slowed-down pacing/soft music.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add mini-game interactions/UX: NO button appears for ~0.5s then disappears, moves when user taps its last location; hiding mechanics behind animated elements; fake buttons (e.g., “NO?”, “Not this one”, “Almost!”) that vanish on tap; progress messaging after a few tries (e.g., “Hmm… this is harder than it looks 🤔”).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Update celebration/end sequence for the game: on YES show confetti burst + hearts explosion + teddy hugging heart, then display a sequence of sweet messages one-by-one and finish with the final Valentine line; optional extra final screen with teddy holding “Best Valentine Ever 🧸❤️” and a Replay button.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Mobile game touches: big tap areas, smooth lightweight animations, light vibration when buttons escape, ensure everything fits on screen without zooming; keep pastel palette (pink/peach/lavender) and soft bouncing character animations (teddy walking, hearts floating, flowers popping).",
       "reqIds": [],
       "status": "pending"
     }

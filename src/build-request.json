@@ -1,226 +1,269 @@
 {
   "kind": "build_request",
-  "title": "Playful Valentine micro-app with multi-screen flow, dodging NO button, and YES celebration",
+  "title": "Pivot Valentine micro-app into “Find the NO Button” mini-game flow with levels, fake buttons, and replay ending",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-1",
-      "text": "Implement a 4-step, single-page Valentine micro-app flow with clearly separated screens: (1) Intro screen, (2) Build-up screen, (3) Big Question screen, (4) Sweet Ending screen. Navigation must be driven by button clicks and not require any backend calls.",
+      "id": "REQ-24",
+      "text": "Replace the current screen flow in frontend/src/App.tsx with the new mini-game flow screens and navigation, using only client-side state transitions (no backend calls): (1) Game Intro, (2) Level 1, (3) Final Level, (4) Real Question, (5) YES Celebration, (6) Optional Extra-Cute Ending with Replay. The Replay action must restart the game from Game Intro (or Level 1) and reset any per-level counters/timers/messages.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "“Hi Anya 💕 I made a tiny app just to ask you something…”",
-          "“Build-Up Screen”",
-          "“The Big Question Screen”",
-          "“Optional Sweet Ending Screen”"
+          "🎮💖 App Idea: “Find the NO Button (If You Can 😏)”",
+          "🏠 Screen 1: Game Intro",
+          "🎮 Screen 2: The Game Begins",
+          "🎮 Screen 3: Final Level",
+          "💘 Screen 4: The Real Question",
+          "🥹 Optional Extra-Cute Ending"
         ]
       },
       "acceptanceCriteria": [
-        "App starts on an Intro screen and progresses forward via user actions only (no page reloads required).",
-        "The flow includes Intro, Build-up, Big Question, and Sweet Ending screens; Sweet Ending is shown after the YES celebration (or via a clear continue action after YES).",
-        "All screen transitions are smooth and feel \"gentle\" (no harsh flashing or jarring motion)."
+        "App no longer shows the old Build-up/Big Question/Sweet Ending flow by default; it follows the new mini-game progression.",
+        "All navigation is driven by button taps and internal state; no actor calls or React Query calls are required.",
+        "Tapping “Replay the game 😄” resets the game state (attempt counts, timers, fake buttons visibility) and returns to the first screen."
       ]
     },
     {
-      "id": "REQ-2",
-      "text": "Create the Intro screen with the exact user-facing text (in English) and a single primary button labeled “Continue”. Text must read: “Hi Anya 💕\\nI made a tiny app just to ask you something…”",
+      "id": "REQ-25",
+      "text": "Update the existing Intro screen UI to match the new Game Intro screen copy and primary action. User-facing text must be exactly:\n- “Hi Anya 💕\\nWelcome to a tiny game I made just for you.”\n- “Your mission: find the NO button 😌”\nPrimary button label must be exactly: “🎮 Start Game”. Keep the screen mobile-first, centered, with a thumb-friendly bottom CTA area.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "“Hi Anya 💕\nI made a tiny app just to ask you something…”\n\nButton:\n👉 “Continue”"
+          "“Hi Anya 💕\nWelcome to a tiny game I made just for you.”",
+          "“Your mission: find the NO button 😌”",
+          "Button:\n🎮 Start Game"
         ]
       },
       "acceptanceCriteria": [
-        "Intro screen displays the specified text exactly (including emoji) and a “Continue” button.",
-        "Clicking “Continue” moves to the Build-up screen."
+        "Intro screen displays the exact two text blocks and the exact “🎮 Start Game” button label.",
+        "Tapping “🎮 Start Game” advances to Level 1.",
+        "CTA remains large (>=56px height) and positioned in a bottom area suitable for one-handed use."
       ]
     },
     {
-      "id": "REQ-3",
-      "text": "Create the Build-up screen with the exact user-facing text (in English) and a single primary button labeled “I’m ready”. Text must read: “This is a very serious question.\\nPlease answer honestly 😌”",
+      "id": "REQ-26",
+      "text": "Implement Level 1 screen (“The Game Begins”) with the following exact user-facing header text at the top: “Level 1: Find the NO button ❌”. The screen must include animated distractions: hearts floating around, a teddy walking back and forth, and flowers popping in and out. Ensure animations are lightweight and mobile-optimized.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "Text:\n\n“This is a very serious question.\nPlease answer honestly 😌”\n\nButton:\n👉 “I’m ready”"
+          "Text at top:\n\n“Level 1: Find the NO button ❌”",
+          "Hearts floating around\n\nTeddy walking back and forth\n\nFlowers popping in and out"
         ]
       },
       "acceptanceCriteria": [
-        "Build-up screen displays the specified text exactly (including emoji) and an “I’m ready” button.",
-        "Clicking “I’m ready” moves to the Big Question screen."
+        "Level 1 shows the exact header text at the top.",
+        "Hearts/teddy/flowers distraction animations are visible and do not block the primary interaction area.",
+        "Animations remain smooth on mobile and do not cause layout shift/jank."
       ]
     },
     {
-      "id": "REQ-4",
-      "text": "Create the Big Question screen with big, bold centered text: “Anya, will you be my Valentine? 💝”. Under it, render two buttons: “YES 💕” and “NO”. Render a small, subtle line of helper text under the buttons: “(Just kidding… but I really hope you say yes 🥺)”.",
+      "id": "REQ-27",
+      "text": "Implement the Level 1 “hidden NO button” mechanic: a real NO button appears for approximately 0.5 seconds, then disappears, and repeatedly relocates to new positions. The NO button must sometimes appear visually ‘behind’ (partially occluded by) one of the distraction elements: a teddy, a flower, or a chocolate. When the user taps the area where the NO button last appeared, the NO button must immediately move/hide again and trigger a light vibration (using the browser Vibration API when available).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "Big bold text in the center:\n\n“Anya, will you be my Valentine? 💝”\n\nTwo buttons underneath:\n\n✅ YES 💕\n\n❌ NO",
-          "You can even add a tiny line under the buttons:\n\n“(Just kidding… but I really hope you say yes 🥺)”"
+          "A NO button appears for half a second… then disappears",
+          "It hides behind:\n\nA teddy 🧸\n\nA flower 🌸\n\nA chocolate 🍫",
+          "When she taps where it was, it moves again",
+          "Light vibrations when buttons escape"
         ]
       },
       "acceptanceCriteria": [
-        "Big Question screen shows the question text centered and visually prominent.",
-        "Buttons render with labels exactly: “YES 💕” and “NO”.",
-        "The helper line appears under the buttons and is visually subtle compared to the main question."
+        "The real NO button is only visible briefly (~0.5s) per appearance and is otherwise hidden.",
+        "The NO button relocates to new positions over time and/or after user interactions.",
+        "At least one of the hiding modes visually places the NO button partially behind a teddy/flower/chocolate asset (layering/occlusion).",
+        "Tapping the NO button’s last-known area causes it to relocate/hide again (even if the button is not currently visible).",
+        "On supported devices, a short vibration occurs when the NO button ‘escapes’."
       ]
     },
     {
-      "id": "REQ-5",
-      "text": "Implement the “dodging NO button” interaction on the Big Question screen: when the user attempts to click/tap the NO button (including pointer hover on desktop and touch/pointer down on mobile), the NO button must evade the pointer by moving (slide/jump) to a new position within a bounded area on the screen. The YES button must remain stationary and easy to click.",
+      "id": "REQ-28",
+      "text": "Add Level 1 funny pop-up feedback messages that appear briefly after each miss/escape. Randomly select and display one of the following exact messages: “Nope 😜”, “Missed it!”, “It ran away!”, “Try again 😂”. After a few tries (define a consistent threshold, e.g., 4 misses), also show the exact progress line: “Hmm… this is harder than it looks 🤔”.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "😏 The Fun Twist (Moving NO Button)\n\nWhen she tries to tap NO:\n\nThe button slides away\n\nOr jumps to a random spot\n\nOr shakes and dodges her finger\n\nThe YES button stays still and friendly."
+          "Funny pop-ups:\n\n“Nope 😜”\n\n“Missed it!”\n\n“It ran away!”\n\n“Try again 😂”",
+          "After a few tries:\n\n“Hmm… this is harder than it looks 🤔”"
         ]
       },
       "acceptanceCriteria": [
-        "Attempting to interact with NO (pointerenter/mouseover on desktop, pointerdown/touchstart on mobile, and/or click) causes NO to move away instead of being clicked.",
-        "NO’s new position always remains fully visible (not off-screen) and stays within a defined container/bounds.",
-        "YES remains fixed in place during NO dodging interactions.",
-        "NO behavior does not cause layout shifts that move the question text or YES button."
+        "After each escape/miss event, one of the four funny pop-ups appears and auto-hides.",
+        "Pop-up messages match the exact spelling/punctuation/emoji provided.",
+        "After the configured number of tries, the progress line “Hmm… this is harder than it looks 🤔” appears at least once."
       ]
     },
     {
-      "id": "REQ-6",
-      "text": "Show playful, non-pressuring feedback messages near the buttons when NO is dodged. Randomly pick from the provided list and display one at a time, briefly (auto-fade) after each dodge attempt. Messages (English, exactly): “Hey hey hey 😳”, “Nice try”, “That button is shy”, “Wrong choice detected 🚫”, “The universe says no… to NO”.",
+      "id": "REQ-29",
+      "text": "Implement the Final Level screen with the exact user-facing text: “Final Level: Last chance 😏”. The screen must show multiple fake tappable buttons with the exact labels: “NO?”, “Not this one”, “Almost!”. Each fake button must vanish when tapped. After the fake buttons sequence, the screen must clear and advance to the Real Question screen.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "Optional playful messages that appear as she tries:\n\n“Hey hey hey 😳”\n\n“Nice try”\n\n“That button is shy”\n\n“Wrong choice detected 🚫”\n\n“The universe says no… to NO”"
+          "Text:\n\n“Final Level: Last chance 😏”",
+          "Multiple fake buttons appear:\n\n“NO?”\n“Not this one”\n“Almost!”\n\nThey all vanish when tapped.\n\nThen the screen clears…"
         ]
       },
       "acceptanceCriteria": [
-        "After each NO dodge, one message from the list appears and then disappears automatically.",
-        "Messages rotate randomly or pseudo-randomly and do not always repeat the same one.",
-        "Message styling matches the app’s cute/playful tone and does not appear aggressive or guilt-inducing."
+        "Final Level displays the exact header text.",
+        "At least three fake buttons appear with the exact labels and are tappable.",
+        "Tapping a fake button removes it from view (vanishes) with a lightweight animation.",
+        "After the fake buttons are gone (or after a short, deterministic sequence), the app transitions to the Real Question screen."
       ]
     },
     {
-      "id": "REQ-7",
-      "text": "When the user clicks “YES 💕”, play a celebratory sequence: (1) confetti burst, (2) hearts raining animation, (3) a short vibration on supported devices (use browser vibration API if available). Then show the success message (English, exactly): “Best decision ever 🥰\\nHappy Valentine’s Day, Anya ❤️” and the follow-up text: “Dinner / chocolate / cuddles are officially planned 😏”.",
+      "id": "REQ-30",
+      "text": "Implement the Real Question screen with slowed-down pacing/feel and soft music behavior: keep the global AudioToggle, but on this screen emphasize the ‘soft music’ moment by presenting the content in a calmer animation cadence (e.g., slower fades). User-facing text must be exactly two lines:\n- “Okay Anya… no more games.”\n- “Will you be my Valentine? 💝”\nRender one clear primary button labeled exactly: “✅ YES 💕”. Do not render any NO button on this screen.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "💥 When She Clicks YES\n\n✨ Confetti explosion\n💖 Hearts raining\n🎉 Little vibration (if possible)\n\nMessage:\n\n“Best decision ever 🥰\nHappy Valentine’s Day, Anya ❤️”\n\nOptional follow-up text:\n\n“Dinner / chocolate / cuddles are officially planned 😏”"
+          "Everything slows down. Soft music.",
+          "“Okay Anya… no more games.”\n“Will you be my Valentine? 💝”",
+          "One clear button:\n\n✅ YES 💕\n\n(The NO button is nowhere 😌)"
         ]
       },
       "acceptanceCriteria": [
-        "Clicking YES triggers a visible confetti effect and a visible hearts-rain effect.",
-        "On supported devices, a vibration occurs; on unsupported devices, the app continues without errors.",
-        "After the celebration begins, the success message and follow-up text are shown exactly as specified.",
-        "After YES is clicked, the NO button is no longer relevant (either hidden/disabled or the screen content changes so it can’t be interacted with)."
+        "Real Question screen shows exactly the two lines of text and a single “✅ YES 💕” button.",
+        "No NO button is present in the DOM or visually on this screen.",
+        "Animations on this screen feel noticeably calmer/slower than Level 1/Final Level (e.g., longer fade durations).",
+        "AudioToggle remains available and continues to respect autoplay policies (music plays only after explicit user action)."
       ]
     },
     {
-      "id": "REQ-8",
-      "text": "Add the Sweet Ending screen text (English, exactly): “I promise this app is the only thing that won’t let you say no 😉\\nThank you for being you.” Provide a clear, gentle way to reach it after the YES celebration (automatic after a short delay or via a “Continue” button).",
+      "id": "REQ-31",
+      "text": "Update the YES celebration flow so that after tapping “✅ YES 💕” it (a) triggers confetti burst, (b) hearts explosion, (c) shows a teddy hugging a heart, then (d) displays the requested sweet messages one-by-one in order (each message visible clearly before the next appears):\n1) “You are absolutely beautiful 🌸”\n2) “I’m so grateful to have you in my life ❤️”\n3) “Every moment with you means everything to me”\n4) “Thank you for being you, Anya 🥰”\nThen show the final line exactly:\n“Happy Valentine’s Day 💕\\nI’m really lucky to be with you.”",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "🥹 Optional Sweet Ending Screen\n\n“I promise this app is the only thing that won’t let you say no 😉\nThank you for being you.”"
+          "🎉 When She Taps YES\n\n✨ Confetti burst\n💖 Hearts explode\n🧸 Teddy hugs a heart",
+          "Sweet messages appear one by one:\n\n“You are absolutely beautiful 🌸”\n“I’m so grateful to have you in my life ❤️”\n“Every moment with you means everything to me”\n“Thank you for being you, Anya 🥰”",
+          "Final line:\n\n“Happy Valentine’s Day 💕\nI’m really lucky to be with you.”"
         ]
       },
       "acceptanceCriteria": [
-        "Sweet Ending screen displays the specified text exactly (including emoji).",
-        "User can reliably reach the Sweet Ending after clicking YES (either automatically after the celebration or via an explicit button)."
+        "Tapping “✅ YES 💕” triggers confetti + heart explosion style effects and a teddy-hugging-heart visual.",
+        "The four sweet messages appear sequentially in the exact order and text.",
+        "After the sequence, the final two-line message appears exactly as provided.",
+        "All celebration effects remain lightweight (no heavy video assets) and do not freeze on mobile."
       ]
     },
     {
-      "id": "REQ-9",
-      "text": "Apply the requested visual style across all screens: a cute Valentine theme using pink, red, and soft purple; rounded, friendly typography; gentle animations that are not overwhelming. Ensure the overall tone stays playful/cute and not pushy or uncomfortable (e.g., avoid shaming language and keep all microcopy light).",
+      "id": "REQ-32",
+      "text": "Add the optional Extra-Cute Ending screen after the celebration sequence that shows a teddy holding a sign with the exact text: “Best Valentine Ever 🧸❤️” and a single button labeled exactly: “Replay the game 😄”.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "🎨 Visual Style\n\nColors: pink, red, soft purple\n\nFont: rounded, friendly\n\nAnimations: gentle, not overwhelming\n\n⚠️ Important Tone Tip\n\nMake sure it feels:\n✅ Playful\n✅ Cute\n❌ Not pushy or uncomfortable"
+          "🥹 Optional Extra-Cute Ending\n\nA final screen with:\n\nTeddy holding a sign:\n“Best Valentine Ever 🧸❤️”\n\nButton:\nReplay the game 😄"
         ]
       },
       "acceptanceCriteria": [
-        "All screens share a consistent palette (pink/red/soft purple) and rounded, friendly typography.",
-        "Animations (screen transitions, message fades, button motions) are smooth and not overly fast or intense.",
-        "Copy and interactions feel playful rather than coercive; no additional text beyond what’s specified is added that increases pressure."
+        "After the celebration message sequence completes, the app navigates to the Extra-Cute Ending screen.",
+        "The ending screen includes a teddy + sign visual and the exact sign text.",
+        "The “Replay the game 😄” button is present and restarts the game flow per REQ-24."
       ]
     },
     {
-      "id": "REQ-10",
-      "text": "Add optional soft romantic background music with an on-screen mute/unmute control that defaults to muted or requires an explicit user action to start playback (to respect browser autoplay policies).",
+      "id": "REQ-33",
+      "text": "Apply the requested mini-game visual style adjustments across the new game screens: pastel colors (pink, peach, lavender), soft bouncing animations, cute characters (teddy, hearts, flowers), and mobile-first one-hand-friendly layout (big tap areas, no zooming required).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "Music (optional): soft romantic tune"
+          "Pastel colors (pink, peach, lavender)",
+          "Soft bouncing animations",
+          "Cute characters (teddy, hearts, flowers)",
+          "Mobile-first, one-hand friendly",
+          "Big tap areas",
+          "Everything fits on screen (no zooming)"
         ]
       },
       "acceptanceCriteria": [
-        "A mute/unmute (or play/pause) control is visible and works.",
-        "Music does not autoplay with sound without a user gesture; initial state is muted or not playing until user interacts.",
-        "Toggling audio does not reset the current screen state."
+        "New screens use a coherent pastel palette emphasizing pink/peach/lavender.",
+        "Tap targets for interactive elements meet mobile usability (>=44px, preferably >=56px for primary CTAs).",
+        "Layouts fit within viewport height on common mobile sizes without requiring pinch-zoom."
       ]
     },
     {
-      "id": "REQ-11",
-      "text": "Add generated static visual assets and render them in the UI as part of the theme (served from frontend/public/assets/generated).",
+      "id": "REQ-34",
+      "text": "Incorporate the uploaded images into the app as static assets (stored under frontend/public/assets/generated or an equivalent static public path) and use them where appropriate for teddy/valentine-game visuals, ensuring any backgrounds that look like checkerboards are removed or avoided so assets appear clean on pastel backgrounds.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "🎨 Visual Style\n\nColors: pink, red, soft purple"
+          "The user has uploaded 8 image(s): pngtree-love-heart-animal-illustration-png-image_2617736.jpg, pngtree-love-heart-animal-illustration-png-image_2617736-1.jpg, pngtree-love-heart-animal-illustration-png-image_2617736-2.jpg, pngtree-love-heart-animal-illustration-png-image_2617736-3.jpg, 85db8b50524115.58d2a85917644.png, 85db8b50524115.58d2a85917644-1.png, 85db8b50524115.58d2a85917644-2.png, 85db8b50524115.58d2a85917644-2.png"
         ]
       },
       "acceptanceCriteria": [
-        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
-        "At least one generated background/pattern asset is visibly used in the app styling (without harming readability)."
+        "At least one uploaded teddy/heart illustration is visible in the UI on one or more game screens.",
+        "Assets used in-game do not show a checkerboard background; they render cleanly on the app background.",
+        "Static assets are served from the frontend (no backend image serving)."
       ]
     }
   ],
   "constraints": [
-    "Use English for all user-facing text.",
-    "Do not rely on any external databases or non-Internet-Computer backend services.",
-    "Do not modify any files under frontend/src/components/ui or any other immutablePaths (compose UI components instead)."
+    "Frontend must not edit files under frontend/src/components/ui or other immutable paths listed in SYSTEM_CONTEXT.",
+    "Do not add backend dependencies; backend/main.mo should remain unchanged unless strictly necessary (this feature should be frontend-only).",
+    "Keep animations mobile-optimized and lightweight; cap particle counts and avoid heavy video-like assets.",
+    "All user-facing text included in these changes must be in English and match the exact strings provided in the user request where specified.",
+    "Music playback must continue to respect browser autoplay policies (requires explicit user action via the existing audio control)."
   ],
   "nonGoals": [
-    "User accounts or authentication (Internet Identity).",
-    "Persisting user responses or analytics.",
-    "Multiplayer/sharing/social integrations.",
-    "Any behavior that attempts to bypass user consent outside the playful NO-button gag (keep tone light and non-coercive)."
+    "Adding user accounts, persistence, leaderboards, or any backend data storage for game progress.",
+    "Integrating third-party auth beyond Internet Identity (not needed for this mini-game).",
+    "Real-time/multiplayer features.",
+    "Implementing external audio streaming; only local/static audio behavior is in scope."
   ],
   "imageRequirements": {
     "required": [
-      "Seamless cute heart pattern background in pink/red/soft-purple palette (valentine-pattern.dim_1600x900.png)",
-      "Soft gradient background with subtle bokeh/hearts in pink/red/soft-purple palette (valentine-gradient-bg.dim_1600x900.png)",
-      "Minimal rounded heart icon sticker style, soft purple/pink tones (heart-sticker-icon.dim_256x256.png)"
+      "Pastel game background pattern with soft clouds/hearts (game-bg.dim_1080x1920.png)",
+      "Teddy holding a rectangular sign (teddy-sign.dim_768x768.png)",
+      "Chocolate icon sticker with transparent background (chocolate-sticker.dim_256x256.png)",
+      "Flower sticker icon with transparent background (flower-sticker.dim_256x256.png)"
     ],
-    "edits": []
+    "edits": [
+      "Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736.jpg > teddy-love-transparent.dim_512x512.png)",
+      "Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736-1.jpg > teddy-love-transparent-2.dim_512x512.png)",
+      "Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736-2.jpg > teddy-love-transparent-3.dim_512x512.png)",
+      "Remove checkerboard/background and export transparent PNG (pngtree-love-heart-animal-illustration-png-image_2617736-3.jpg > teddy-love-transparent-4.dim_512x512.png)"
+    ]
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }
